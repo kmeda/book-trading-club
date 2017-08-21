@@ -1,7 +1,8 @@
 import React,{Component} from 'react';
 import {BrowserRouter as Router, Route, Switch, Link} from 'react-router-dom';
 
-class Home extends Component {
+
+class SignUp extends Component {
   constructor(props){
     super(props);
   }
@@ -15,10 +16,7 @@ class Home extends Component {
 
             <div className="bc-auth-form">
               <div className="bc-auth-header">
-                Already a member?
-                <br/>
-                <br/>
-                Sign In
+                Sign Up
               </div>
 
               <form>
@@ -34,7 +32,12 @@ class Home extends Component {
                   <input placeholder="Password" type="password"/>
               </div>
               <br/>
-              <button onClick={(e)=> preventDefault(e)}>Sign In</button>
+              <div className="bc-input-style">
+                <div className="bc-input-icon fa fa-key"></div>
+                  <input placeholder="Confirm Password" type="password"/>
+              </div>
+              <br />
+              <button onClick={(e)=> preventDefault(e)}>Sign Up</button>
               </form>
             </div>
 
@@ -44,8 +47,8 @@ class Home extends Component {
                   <div className="bc-auth-bg-logo"></div>
                 </div>
                 <div className="bc-auth-signup">
-                  <h3>Not a member yet ?</h3>
-                  <Link to={"/signup"}><button className="bc-auth-signup-btn">Sign Up</button></Link>
+                  <h3>Already a member ?</h3>
+                  <Link to={"/"}><button className="bc-auth-signup-btn">Sign In</button></Link>
                 </div>
                 <div className="bc-auth-techstack">
 
@@ -61,4 +64,4 @@ class Home extends Component {
   }
 }
 
-export default Home;
+export default SignUp;
