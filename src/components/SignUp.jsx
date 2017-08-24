@@ -7,6 +7,10 @@ class SignUp extends Component {
     super(props);
   }
 
+  handleSignUp(e){
+    e.preventDefault();
+  }
+
   render(){
     return (
       <div>
@@ -37,7 +41,7 @@ class SignUp extends Component {
                   <input placeholder="Confirm Password" type="password"/>
               </div>
               <br />
-              <button onClick={(e)=> preventDefault(e)}>Sign Up</button>
+              <button onClick={this.handleSignUp.bind(this)}>Sign Up</button>
               </form>
             </div>
 
@@ -47,7 +51,7 @@ class SignUp extends Component {
                   <div className="bc-auth-bg-logo"></div>
                 </div>
                 <div className="bc-auth-signup">
-                  <h3>Already a member ?</h3>
+                  <h3>Already a member?</h3>
                   <Link to={"/"}><button className="bc-auth-signup-btn">Sign In</button></Link>
                 </div>
                 <div className="bc-auth-techstack">

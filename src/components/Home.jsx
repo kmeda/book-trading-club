@@ -6,6 +6,10 @@ class Home extends Component {
     super(props);
   }
 
+  handleSignIn(e){
+    e.preventDefault();
+  }
+
   render(){
     return (
       <div>
@@ -34,7 +38,7 @@ class Home extends Component {
                   <input placeholder="Password" type="password"/>
               </div>
               <br/>
-              <button onClick={(e)=> preventDefault(e)}>Sign In</button>
+              <button onClick={this.handleSignIn.bind(this)}>Sign In</button>
               </form>
             </div>
 
@@ -48,9 +52,7 @@ class Home extends Component {
                   <Link to={"/signup"}><button className="bc-auth-signup-btn">Sign Up</button></Link>
                 </div>
                 <div className="bc-auth-techstack">
-
                 </div>
-
               </div>
             </div>
 
