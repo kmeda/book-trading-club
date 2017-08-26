@@ -1,9 +1,13 @@
 FROM mhart/alpine-node
 
-ADD . /src
+ENV NODE_ENV=production
+ENV PORT=3050
 
+COPY . /src
 WORKDIR /src
 
-EXPOSE 3000
+RUN npm install
 
-CMD ["npm", "start"]
+EXPOSE $PORT
+
+ENTRYPOINT ["node", "server.js"]
