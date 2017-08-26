@@ -3,6 +3,8 @@ var path = require('path');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 
+console.log("Current environment - "+process.env.NODE_ENV);
+
 var envFile = require('node-env-file');
 
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
@@ -14,7 +16,7 @@ try {
 
 const VENDOR_LIBS = [
   'react', 'redux', 'react-redux', 'react-dom',
-  'redux-form', 'redux-thunk', 'react-router-dom','firebase'
+  'redux-form', 'redux-thunk', 'react-router-dom'
 ];
 
 module.exports = {
@@ -35,16 +37,10 @@ module.exports = {
         exclude: /node_modules/
       },
       {
-        test: /\.css$/,
-        use: ExtractTextPlugin.extract({
-          use: 'css-loader?importLoaders=1'
-        }),
-      },
-      {
-        test: /\.scss$/,
+        test: /\.(scss|sass)$/,
         use: ['css-hot-loader'].concat(ExtractTextPlugin.extract({
           fallback: 'style-loader',
-          use: ['css-loader','sass-loader'],
+          use: ['css-loader','sass-loader']
         })),
       },
       {
@@ -78,7 +74,9 @@ module.exports = {
     port: 8080,
     disableHostCheck: true
   },
-
+  watchOptions: {
+  ignored: /node_modules/
+  },
   plugins: [
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
@@ -91,8 +89,7 @@ module.exports = {
     }),
     new ExtractTextPlugin({
     filename: 'styles.css',
-    allChunks: true,
-    publicPath: '../'
+    allChunks: true
   }),
     new webpack.ProvidePlugin({
      $: "jquery",

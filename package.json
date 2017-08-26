@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "clean": "rimraf dist",
-    "build": "NODE_ENV=production npm run clean && webpack -p",
+    "build": "export NODE_ENV=production && npm run clean && webpack -p --progress --colors",
     "serve": "webpack-dev-server --progress --inline --hot"
   },
   "author": "",
@@ -20,14 +20,12 @@
     "babel-preset-react": "^6.16.0",
     "babel-preset-react-hmre": "^1.1.1",
     "babel-preset-stage-0": "^6.24.1",
-    "bootstrap": "^3.3.7",
     "circular-json": "^0.3.1",
     "css-hot-loader": "^1.1.1",
     "css-loader": "^0.28.4",
     "express": "^4.14.0",
     "extract-text-webpack-plugin": "^2.1.2",
     "file-loader": "^0.11.2",
-    "firebase": "^4.1.2",
     "font-awesome": "^4.7.0",
     "html-webpack-plugin": "^2.24.1",
     "image-webpack-loader": "^3.3.1",
@@ -43,6 +41,7 @@
     "redux-form": "^6.3.2",
     "redux-infinite-scroll": "^1.0.9",
     "redux-thunk": "^2.2.0",
+    "resolve-url-loader": "^2.1.0",
     "rimraf": "^2.5.4",
     "sass-loader": "^6.0.5",
     "serve-favicon": "^2.4.3",
@@ -50,7 +49,6 @@
     "url-loader": "^0.5.9",
     "webpack": "^3.0.0",
     "webpack-dev-middleware": "^1.9.0",
-    "webpack-dev-server": "^2.2.0-rc.0",
-    "yelp": "^1.0.2"
+    "webpack-dev-server": "^2.2.0-rc.0"
   }
 }

@@ -51,11 +51,11 @@ class SignUp extends Component {
                   <div className="bc-auth-bg-logo"></div>
                 </div>
                 <div className="bc-auth-signup">
-                  <h3>Already a member?</h3>
-                  <Link to={"/"}><button className="bc-auth-signup-btn">Sign In</button></Link>
-                </div>
-                <div className="bc-auth-techstack">
+                  <div className="bc-auth-signup-txt">Already a member ?</div>
+                  <Link to={"/"}><div className="bc-auth-signup-lnk">Sign In</div></Link>
+                  <div className="bc-auth-techstack">
 
+                  </div>
                 </div>
 
               </div>

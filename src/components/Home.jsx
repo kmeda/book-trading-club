@@ -19,7 +19,7 @@ class Home extends Component {
 
             <div className="bc-auth-form">
               <div className="bc-auth-header">
-                Already a member?
+                Already a member???
                 <br/>
                 <br/>
                 Sign In
@@ -48,11 +48,13 @@ class Home extends Component {
                   <div className="bc-auth-bg-logo"></div>
                 </div>
                 <div className="bc-auth-signup">
-                  <h3>Not a member yet ?</h3>
-                  <Link to={"/signup"}><button className="bc-auth-signup-btn">Sign Up</button></Link>
+                  <div className="bc-auth-signup-txt">Not a member yet ?</div>
+                  <Link to={"/signup"}><div className="bc-auth-signup-lnk">Sign Up</div></Link>
+                  <div className="bc-auth-techstack">
+
+                  </div>
                 </div>
-                <div className="bc-auth-techstack">
-                </div>
+
               </div>
             </div>
 

@@ -5,7 +5,7 @@ body
   height: 100vh
   width: 100vw
   color: white
-  background-image: url(/src/assets/ebook-bookshelf.jpg)
+  background-image: url("../src/assets/ebook-bookshelf.jpg")
   background-size: cover
   background-repeat: no-repeat
   position: relative
@@ -82,7 +82,7 @@ body
       position: relative
       border-bottom-left-radius: 10px
       border-bottom-right-radius: 10px
-      background-image: url(/src/assets/ebook-bookshelf.jpg)
+      background-image: url("../src/assets/ebook-bookshelf.jpg")
       background-size: cover
       background-repeat: no-repeat
       .bc-auth-bg-overlay
@@ -102,42 +102,40 @@ body
           .bc-auth-bg-logo
             height: 30px
             width: 30px
-            background-image: url(/src/assets/glyph.png)
+            background-image: url("../src/assets/glyph.png")
             background-size: contain
             background-repeat: no-repeat
             margin-left: 10px
             margin-top: 5px
         .bc-auth-signup
+          display: flex
+          justify-content: flex-start
+          align-items: flex-end
           width: 100%
-          height: 65%
-          h3
-            font-size: 0.9em
-            margin-left: 10px
-            margin-top: 30px
-            letter-spacing: 0.1em
+          height: 85%
+          .bc-auth-signup-txt
+            width: 110px
+            // background-color: yellow
+            font-size: 0.75em
+            transform: translateY(-3px)
+            margin-left: 3px
             color: #d1cdcd
-          .bc-auth-signup-btn
-            display: flex
-            align-items: center
-            justify-content: center
-            width: 80px
-            height: 25px
+          .bc-auth-signup-lnk
+            // background-color: pink
+            width: 50px
             font-size: 0.8em
             border-radius: 3px
-            background-color: rgba(255,255,255,0.1)
-            border: 1px solid #bfbfbf
-            margin-left: 10px
-            box-shadow: 0 0 35px rgb(0,0,0), 0 0 55px rgb(0,0,0)
-            color: #ece7e7
             cursor: pointer
-            outline: none
-            transition: all 0.2s ease-in-out
+            margin-left: 13px
+            transform: translateY(-3px)
+            color: #0ccdab
+            text-decoration: underline
             &:hover
-              background-color: rgba(255,255,255,0.2)
-            &:active
-              outline: none
-              letter-spacing: 0.1em
+              color: #03ffd3
 
-        .bc-auth-techstack
-          width: 100%
-          height: 20%
+          .bc-auth-techstack
+            height: 90px
+            width: 115px
+            background-color: rgba(0,0,0,0.8)
+            // background-color: pink
+            transform: translate(82px, -40px)
