@@ -2,15 +2,17 @@ const express = require('express');
 const path = require('path');
 const axios = require("axios");
 const CircularJSON = require('circular-json');
-var favicon = require('serve-favicon');
+const favicon = require('serve-favicon');
+
+const router = require("./router.js");
 
 const app = express();
+
 app.use(favicon(path.join(__dirname + '/favicon.ico')));
 
 app.use(express.static('dist'));
 
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'dist/index.html'));
-});
+router(app);
 
-app.listen(process.env.PORT || 3050, () => console.log('Listening'));
+const PORT = process.env.PORT || 3050;
+app.listen(PORT, () => console.log(`Listening on localhost:${PORT}`));

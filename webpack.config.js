@@ -33,8 +33,16 @@ module.exports = {
     rules: [
       {
         test: /\.(js|jsx)$/,
-        use: 'babel-loader',
-        exclude: /node_modules/
+        loader: 'babel-loader',
+        exclude: /node_modules/,
+        query: {
+            presets: ['es2015', 'react', 'stage-0'],
+            env: {
+              development: {
+                presets: ['react-hmre']
+              }
+            }
+        }
       },
       {
         test: /\.(scss|sass)$/,

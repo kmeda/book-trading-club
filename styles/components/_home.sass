@@ -41,11 +41,33 @@ body
         justify-content: center
         align-items: center
         border: none
+        position: relative
+
         .bc-input-icon
           width: 30px
           height: 30px
           font-size: 1.1em
           margin-top: 20px
+          .bc-input-error
+            position: absolute
+            font-family: sans-serif
+            transform: translateX(30px)
+            font-size: 0.75em
+            color: red
+          .bc-input-valid
+            position: absolute
+            transform: translate(300px, 5px)
+            color: #77ff6b
+          .bc-input-invalid
+            position: absolute
+            transform: translate(300px, 5px)
+            color: red
+          .bc-auth-error
+            position: absolute
+            font-family: monospace
+            transform: translateX(30px)
+            font-size: 0.9em
+            color: red
         input
           height: 30px
           width: 280px
@@ -68,6 +90,7 @@ body
         border: 1px solid #bfbfbf
         color: #ece7e7
         margin-left: 60px
+        margin-top: 15px
         box-shadow: 0 0 35px rgb(0,0,0), 0 0 55px rgb(0,0,0)
         cursor: pointer
         outline: none
