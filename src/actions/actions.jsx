@@ -1,4 +1,6 @@
-
+import axios from 'axios';
+import React from 'react';
+import {BrowserRouter as Route, Redirect} from 'react-router-dom';
 // Sign In Actions
 export var signingInUser = () => {
   return {
@@ -34,12 +36,6 @@ export var clearErrorMsg = () => {
   }
 }
 
-export var signInUser = (credentials) => {
-  return (dispatch, getState) => {
-    //call server and update auth state
-      //error or token
-  }
-}
 
 
 export var emailErrorMsg = (flag) => {
@@ -95,5 +91,34 @@ export var passwordConfirmedInvalid = (flag) => {
   return {
     type: "PASSWORD_CONFIRMATION_INVALID",
     flag
+  }
+}
+
+export var startSignIn = (credentials) => {
+  return (dispatch, getState) => {
+    //call server and update auth state
+      //error or token
+    console.log(JSON.stringify(credentials));
+    axios.post('http://localhost:3050/signin_user', JSON.stringify(credentials)).then((res)=>{
+      console.log(res);
+      <Redirect push to="/bookclub"/>
+
+    }).catch((e) => console.log(e));
+
+
+  }
+}
+
+
+export var startSignUp = (credentials) => {
+  return (dispatch, getState) => {
+    //call server and update auth state
+      //error or token
+    console.log(JSON.stringify(credentials));
+    axios.post('http://localhost:3050/signup_user', JSON.stringify(credentials)).then((res)=>{
+      console.log(res);
+    }).catch((e) => console.log(e));;
+
+
   }
 }

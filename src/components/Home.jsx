@@ -11,8 +11,6 @@ class Home extends Component {
   componentWillUnmount(){
     var {dispatch} = this.props;
     dispatch(actions.clearErrorMsg());
-    // this.refs.username.value = '';
-    // this.refs.password.value = '';
   }
 
   handleSignIn(e){
@@ -21,15 +19,15 @@ class Home extends Component {
 
     dispatch(actions.clearErrorMsg());
 
-    let username = this.refs.username.value;
+    let email = this.refs.username.value;
     let password = this.refs.password.value;
 
-    let credentials = {username, password};
-    console.log(credentials);
+    let credentials = {email, password};
 
 
-    if (username === '' || password === '') {
-      if (username === '') {
+
+    if (email === '' || password === '') {
+      if (email === '') {
         dispatch(actions.emptyEmailError());
       }
       if (password === '') {
@@ -39,6 +37,8 @@ class Home extends Component {
     }
 
     //dispatch async action with credentials
+      dispatch(actions.startSignIn(credentials));
+
   }
 
   handleChange(e){

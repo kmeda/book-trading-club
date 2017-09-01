@@ -13,13 +13,13 @@ class SignUp extends Component {
     e.preventDefault();
     var {dispatch, auth} = this.props;
 
-    var username = this.refs.userEmail.value;
+    var email = this.refs.userEmail.value;
     var password = this.refs.password.value;
     var passwordConfirm = this.refs.passwordConfirm.value;
-    var credentials = {username, password};
+    let credentials = {email, password};
 
-    if (username === '' || password === '' || passwordConfirm === '') {
-      if (username === '') {
+    if (email === '' || password === '' || passwordConfirm === '') {
+      if (email === '') {
         dispatch(actions.emailErrorMsg(true));
       }
       if (password === '') {
@@ -29,7 +29,7 @@ class SignUp extends Component {
     }
     // dispatch action to send credentials to server and receive token then redirect to app
     if (auth.signUp.emailValid && auth.signUp.passwordValid && auth.signUp.passwordConfirmed) {
-      console.log(credentials);
+      dispatch(actions.startSignUp(credentials));
     }
 
   }
