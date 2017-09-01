@@ -32,6 +32,20 @@ export var authReducer = (state={signIn: '', signUp: ''}, action) => {
         signIn: '',
         signUp: ''
       }
+    case "EMAIL_ERROR_MSG":
+      return {
+        ...state,
+        signUp: { ...state.signUp,
+          noEmail: action.flag
+        }
+      };
+    case "PASSWORD_ERROR_MSG":
+      return {
+        ...state,
+        signUp: { ...state.signUp,
+          noPassword: action.flag
+        }
+      };
     case "EMAIL_VALID":
       return {
         ...state,
@@ -43,16 +57,37 @@ export var authReducer = (state={signIn: '', signUp: ''}, action) => {
       return {
         ...state,
         signUp: { ...state.signUp,
-          emailValid: action.flag
+          emailInValid: action.flag
         }
       };
-    case "EMAIL_ERROR_MSG":
+    case "PASSWORD_VALID":
       return {
         ...state,
         signUp: { ...state.signUp,
-          invalidEmail: action.flag
+          passwordValid: action.flag
         }
       };
+    case "PASSWORD_INVALID":
+      return {
+        ...state,
+        signUp: { ...state.signUp,
+          passwordInValid: action.flag
+        }
+      };
+    case "PASSWORD_CONFIRMATION":
+      return {
+        ...state,
+        signUp: { ...state.signUp,
+          passwordConfirmed: action.flag
+        }
+      }
+    case "PASSWORD_CONFIRMATION_INVALID":
+      return {
+        ...state,
+        signUp: { ...state.signUp,
+          passwordConfirmedInvalid: action.flag
+        }
+      }
     default:
       return state;
   }

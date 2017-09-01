@@ -11,59 +11,112 @@ class SignUp extends Component {
 
   handleSignUp(e){
     e.preventDefault();
+    var {dispatch, auth} = this.props;
+
     var username = this.refs.userEmail.value;
     var password = this.refs.password.value;
+    var passwordConfirm = this.refs.passwordConfirm.value;
     var credentials = {username, password};
 
+    if (username === '' || password === '' || passwordConfirm === '') {
+      if (username === '') {
+        dispatch(actions.emailErrorMsg(true));
+      }
+      if (password === '') {
+        dispatch(actions.passwordErrorMsg(true));
+      }
+      return;
+    }
     // dispatch action to send credentials to server and receive token then redirect to app
-  }
+    if (auth.signUp.emailValid && auth.signUp.passwordValid && auth.signUp.passwordConfirmed) {
+      console.log(credentials);
+    }
 
-  handleEmailFormat(){
+  }
+  //
+
+  handleFieldChange(){
     var {dispatch} = this.props;
     var email = this.refs.userEmail.value;
-    if (/\S+@\S+\.\S+/.test(email)) {
-      dispatch(actions.emailValid());
+    var password = this.refs.password.value;
+    var passwordConfirm = this.refs.passwordConfirm.value;
+
+    if (email.length === 0 || password.length === 0) {
+      if (email.length === 0) {
+        dispatch(actions.emailValid(false));
+      }
+      if (password.length === 0) {
+        dispatch(actions.passwordValid(false));
+      }
+      return;
+    }
+
+    if (passwordConfirm === password) {
+      //success case
+      dispatch(actions.passwordConfirmedInvalid(false));
+      dispatch(actions.passwordConfirmed(true));
+    }
+
+  }
+
+  handleEmailValidity(){
+    var {dispatch} = this.props;
+    var email = this.refs.userEmail.value;
+
+    if (email.length === 0) {
       dispatch(actions.emailErrorMsg(false));
+      dispatch(actions.emailValid(false));
+      dispatch(actions.emailInValid(false));
+      return;
     }
-    if (!(/\S+@\S+\.\S+/.test(email))) {
-      dispatch(actions.emailInValid());
-    }
-  }
 
-  handleEmailValidity(e){
-    var {dispatch} = this.props;
-    // dispatch(actions.clearErrorMsg());
-    var email = this.refs.userEmail.value;
-    if (!(/\S+@\S+\.\S+/.test(email))) {
-      dispatch(actions.emailErrorMsg(true));
-    } else {
+    if (email !== '' && !(/\S+@\S+\.\S+/.test(email))) {
       dispatch(actions.emailErrorMsg(false));
+      dispatch(actions.emailInValid(true));
+      dispatch(actions.emailValid(false));
+    } else if(email !== '' && (/\S+@\S+\.\S+/.test(email))) {
+      dispatch(actions.emailErrorMsg(false));
+      dispatch(actions.emailValid(true));
+      dispatch(actions.emailInValid(false));
     }
+
+
+
   }
 
-  handleEmailInput(){
+  handlePasswordValidity(){
     var {dispatch} = this.props;
-    var email = this.refs.userEmail.value;
-    if (!(/\S+@\S+\.\S+/.test(email))) {
-      dispatch(actions.emailInValid());
+    var password = this.refs.password.value;
+
+    if (password.length === 0) {
+      dispatch(actions.passwordValid(false));
+      return;
+    }
+
+    if (password.length !==0 && password.length < 6) {
+      dispatch(actions.passwordErrorMsg(false));
+      dispatch(actions.passwordInValid(true));
+      dispatch(actions.passwordValid(false));
+    } else if(password.length >= 6){
+      dispatch(actions.passwordErrorMsg(false));
+      dispatch(actions.passwordValid(true));
+      dispatch(actions.passwordInValid(false));
     }
   }
 
-  handlePWDLength(){
+  handlePasswordConfirmValidity(){
+    //error case onBlur
+    var {dispatch} = this.props;
+    var password = this.refs.password.value;
+    var passwordConfirm = this.refs.passwordConfirm.value;
+
+    if (passwordConfirm !== password ) {
+      dispatch(actions.passwordConfirmed(false));
+      dispatch(actions.passwordConfirmedInvalid(true));
+    }
 
   }
 
-  handlePWDLengthValidity(){
-
-  }
-
-  handlePWDConfirm(){
-
-  }
-
-  handlePWDConfirmValidity(){
-
-  }
 
   render(){
     return (
@@ -76,38 +129,36 @@ class SignUp extends Component {
               <form>
                 <div className="bc-input-style">
                   <div className="bc-input-icon fa fa-user-circle">
-                    {/* <i className="fa fa-check bc-input-valid"></i> */}
-                    {/* <p className='bc-input-error'>Email Invalid</p> */}
-                    {this.props.auth.signUp.invalidEmail ? <p className='bc-input-error'>Email Invalid</p> : null}
+                    {this.props.auth.signUp.noEmail ? <p className='bc-input-error'>Email Required</p> : null}
+                    {this.props.auth.signUp.emailInValid ? <p className='bc-input-error'>Email Invalid</p> : null}
                     {this.props.auth.signUp.emailValid ? <i className="fa fa-check bc-input-valid"></i> : null}
                   </div>
                   <input placeholder="Email" ref='userEmail'
-                         onChange={this.handleEmailFormat.bind(this)}
-                         onBlur={this.handleEmailValidity.bind(this)}
-                         onFocus={this.handleEmailInput.bind(this)} />
+                         onChange={this.handleFieldChange.bind(this)}
+                         onBlur={this.handleEmailValidity.bind(this)} />
                 </div>
                 <br/>
                 <div className="bc-input-style">
                   <div className="bc-input-icon fa fa-key">
-                    <i className="fa fa-check bc-input-valid"></i>
-                    <p className='bc-input-error'>Minimum 6 characters</p>
+                    {this.props.auth.signUp.noPassword ? <p className='bc-input-error'>Password minimun 6 characters</p> : null}
+                    {this.props.auth.signUp.passwordInValid ? <p className='bc-input-error'>Password minimun 6 characters</p> : null}
+                    {this.props.auth.signUp.passwordValid ? <i className="fa fa-check bc-input-valid"></i> : null}
                   </div>
                   <input placeholder="Password" type="password" ref='password'
-                         onChange={this.handlePWDLength.bind(this)}
-                         onBlur={this.handlePWDLengthValidity.bind(this)} />
+                          onChange={this.handleFieldChange.bind(this)}
+                          onBlur={this.handlePasswordValidity.bind(this)}/>
 
-                    {this.props.auth.signUp.validPWDLength ? <i className="fa fa-check bc-input-valid"></i> : null}
+
                 </div>
                 <br/>
                 <div className="bc-input-style">
                   <div className="bc-input-icon fa fa-key">
-                    <i className="fa fa-times bc-input-invalid"></i>
-
+                    {this.props.auth.signUp.passwordConfirmed ? <i className="fa fa-check bc-input-valid"></i> : null}
+                    {this.props.auth.signUp.passwordConfirmedInvalid ? <i className="fa fa-times bc-input-invalid"></i> : null}
                   </div>
                   <input placeholder="Confirm Password" type="password" ref='passwordConfirm'
-                         onChange={this.handlePWDConfirm.bind(this)}
-                         onBlur={this.handlePWDConfirmValidity.bind(this)}/>
-                  {this.props.auth.signUp.validPWDS ? <i className="fa fa-times bc-input-invalid"></i> : null}
+                         onChange={this.handleFieldChange.bind(this)}
+                         onBlur={this.handlePasswordConfirmValidity.bind(this)}/>
                 </div>
                 <br />
                 {

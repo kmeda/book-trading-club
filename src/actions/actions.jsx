@@ -42,25 +42,58 @@ export var signInUser = (credentials) => {
 }
 
 
-// Sign Up Actions
-
-export var emailValid = () => {
-  return {
-    type: "EMAIL_VALID",
-    flag: true
-  }
-}
-
-export var emailInValid = () => {
-  return {
-    type: "EMAIL_INVALID",
-    flag: false
-  }
-}
-
 export var emailErrorMsg = (flag) => {
   return {
     type: "EMAIL_ERROR_MSG",
+    flag
+  }
+}
+
+export var passwordErrorMsg = (flag) => {
+  return {
+    type: "PASSWORD_ERROR_MSG",
+    flag
+  }
+}
+
+export var emailInValid = (flag) => {
+  return {
+    type: "EMAIL_INVALID",
+    flag
+  }
+}
+
+export var emailValid = (flag) => {
+  return {
+    type: "EMAIL_VALID",
+    flag
+  }
+}
+
+export var passwordInValid = (flag) => {
+  return {
+    type: "PASSWORD_INVALID",
+    flag
+  }
+}
+
+export var passwordValid = (flag) => {
+  return {
+    type: "PASSWORD_VALID",
+    flag
+  }
+}
+
+export var passwordConfirmed = (flag) => {
+  return {
+    type: "PASSWORD_CONFIRMATION",
+    flag
+  }
+}
+
+export var passwordConfirmedInvalid = (flag) => {
+  return {
+    type: "PASSWORD_CONFIRMATION_INVALID",
     flag
   }
 }
