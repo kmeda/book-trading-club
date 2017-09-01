@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-import {BrowserRouter as Router, Route, Switch, Link} from 'react-router-dom';
+import {BrowserRouter as Router, Route, Switch, Link, withRouter} from 'react-router-dom';
 import * as Redux from "react-redux";
 var actions = require('../actions/actions.jsx');
 
@@ -122,9 +122,3 @@ export default Redux.connect(
     }
   }
 )(Home);
-
-
-// Either fields empty - throw errors
-// On Submit - call server - get result back -
-  // based on result throw error - invalid credentials or redirect to protected route
-    // higher order components - authentication hoc

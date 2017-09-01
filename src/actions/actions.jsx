@@ -1,6 +1,6 @@
 import axios from 'axios';
-import React from 'react';
-import {BrowserRouter as Route, Redirect} from 'react-router-dom';
+import { push } from 'react-router-redux';
+
 // Sign In Actions
 export var signingInUser = () => {
   return {
@@ -101,8 +101,7 @@ export var startSignIn = (credentials) => {
     console.log(JSON.stringify(credentials));
     axios.post('http://localhost:3050/signin_user', JSON.stringify(credentials)).then((res)=>{
       console.log(res);
-      <Redirect push to="/bookclub"/>
-
+      dispatch(push('/bookclub'));
     }).catch((e) => console.log(e));
 
 

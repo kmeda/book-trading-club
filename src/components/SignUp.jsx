@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-import {BrowserRouter as Router, Route, Switch, Link} from 'react-router-dom';
+import {BrowserRouter as Router, Route, Switch, Link, withRouter} from 'react-router-dom';
 import * as Redux from "react-redux";
 var actions = require('../actions/actions.jsx');
 
@@ -186,10 +186,10 @@ class SignUp extends Component {
   }
 }
 
-export default Redux.connect(
+export default withRouter(Redux.connect(
   (state) => {
     return {
       auth: state.auth
     }
   }
-)(SignUp);
+)(SignUp));

@@ -1,4 +1,6 @@
 import React,{Component} from 'react';
+import {withRouter} from 'react-router-dom';
+
 
 class BookClub extends Component {
   constructor(props){
@@ -14,4 +16,4 @@ class BookClub extends Component {
   }
 }
 
-export default BookClub;
+export default withRouter(BookClub);
