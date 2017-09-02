@@ -101,8 +101,15 @@ export var startSignIn = (credentials) => {
     console.log(JSON.stringify(credentials));
     axios.post('http://localhost:3050/signin_user', JSON.stringify(credentials)).then((res)=>{
       console.log(res);
-      dispatch(push('/bookclub'));
-    }).catch((e) => console.log(e));
+      if (res.data.token) {
+        dispatch(push('/'));
+      }
+
+    }).catch((e) => {
+      console.log(e);
+
+
+    });
 
 
   }
@@ -115,9 +122,13 @@ export var startSignUp = (credentials) => {
       //error or token
     console.log(JSON.stringify(credentials));
     axios.post('http://localhost:3050/signup_user', JSON.stringify(credentials)).then((res)=>{
-      console.log(res);
+
+      if (res.data.token) {
+        console.log(res.data);
+        dispatch(push('/'));
+      } else if (res.data.error === "Email is in use") {
+        console.log("Email is in use");
+      }
     }).catch((e) => console.log(e));;
-
-
   }
 }

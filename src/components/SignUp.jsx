@@ -9,6 +9,11 @@ class SignUp extends Component {
     super(props);
   }
 
+  componentWillUnmount(){
+    var {dispatch} = this.props;
+    dispatch(actions.clearErrorMsg());
+  }
+
   handleSignUp(e){
     e.preventDefault();
     var {dispatch, auth} = this.props;
@@ -132,6 +137,7 @@ class SignUp extends Component {
                     {this.props.auth.signUp.noEmail ? <p className='bc-input-error'>Email Required</p> : null}
                     {this.props.auth.signUp.emailInValid ? <p className='bc-input-error'>Email Invalid</p> : null}
                     {this.props.auth.signUp.emailValid ? <i className="fa fa-check bc-input-valid"></i> : null}
+                    {this.props.auth.signUp.emailInUse ? <p className='bc-input-error'>Email is in use</p> : null}
                   </div>
                   <input placeholder="Email" ref='userEmail'
                          onChange={this.handleFieldChange.bind(this)}
@@ -174,7 +180,7 @@ class SignUp extends Component {
                 <div className="bc-auth-bg-fcclogo"><div className="bc-auth-bg-logo"></div></div>
                 <div className="bc-auth-signup">
                   <div className="bc-auth-signup-txt">Already a member ?</div>
-                  <Link to={"/"}><div className="bc-auth-signup-lnk">Sign In</div></Link>
+                  <Link to={"/signin"}><div className="bc-auth-signup-lnk">Sign In</div></Link>
                   <div className="bc-auth-techstack"></div>
                 </div>
               </div>

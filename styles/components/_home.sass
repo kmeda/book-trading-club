@@ -1,164 +1,88 @@
-body
-  padding: 0
-  margin: 0
-.bc-background
-  height: 100vh
-  width: 100vw
-  color: white
-  background-image: url("../src/assets/ebook-bookshelf.jpg")
-  background-size: cover
-  background-repeat: no-repeat
-  position: relative
-  filter: blur(10px)
-.bc-background-overlay
+.bc-outer-wrapper
   display: flex
-  justify-content: center
+  flex-direction: column
+  // justify-content: center
   align-items: center
-  top: 0
-  position: absolute
-  height: 100vh
-  width: 100vw
-  // background: -webkit-linear-gradient(top, #000000 0%, rgba(142, 142, 142, 0.7) 45%,rgba(0, 0, 0, 0.7) 100%)
-  background: -webkit-linear-gradient(top, #000000 0%, rgba(93, 93, 93, 0.7) 35%, rgba(0, 0, 0, 0.9) 100%)
-  .bc-auth-container
+  width: 100%
+  min-height: 100vh
+  background:
+    image: url("../src/assets/vintage.png")
+
+  .bc-color-strip
     display: flex
-    flex-direction: column
-    width: 375px
-    height: 550px
-    border-radius: 10px
-    box-shadow: 0 0 35px rgb(0,0,0), 0 0 55px rgb(0,0,0)
-    .bc-auth-form
-      width: 100%
-      height: 70%
-      background: -webkit-linear-gradient(top, #000000 0%,#090909 35%, #171616 100%)
-      color: white
-      .bc-auth-header
-        text-align: center
-        margin-top: 80px
-        font-family: "Fira sans"
-      .bc-input-style
-        display: flex
-        justify-content: center
-        align-items: center
-        border: none
-        position: relative
-
-        .bc-input-icon
-          width: 30px
-          height: 30px
-          font-size: 1.1em
-          margin-top: 20px
-          .bc-input-error
-            position: absolute
-            font-family: sans-serif
-            transform: translateX(30px)
-            font-size: 0.75em
-            color: red
-          .bc-input-valid
-            position: absolute
-            transform: translate(300px, 5px)
-            color: #77ff6b
-          .bc-input-invalid
-            position: absolute
-            transform: translate(300px, 5px)
-            color: red
-          .bc-auth-error
-            position: absolute
-            font-family: monospace
-            transform: translateX(30px)
-            font-size: 0.9em
-            color: red
-        input
-          height: 30px
-          width: 280px
-          background: none
-          border: none
-          border-bottom: 1px solid white
-          color: #c8c8c8
-          font-size: 0.9em
-          &:focus
-            outline: none
-      button
-        display: flex
-        align-items: center
-        justify-content: center
-        width: 80px
-        height: 25px
-        font-size: 0.8em
-        border-radius: 3px
-        background-color: rgba(255,255,255,0.1)
-        border: 1px solid #bfbfbf
-        color: #ece7e7
-        margin-left: 60px
-        margin-top: 15px
-        box-shadow: 0 0 35px rgb(0,0,0), 0 0 55px rgb(0,0,0)
-        cursor: pointer
-        outline: none
-        transition: all 0.3s
-        &:active
-          letter-spacing: 0.1em
-          outline: none
-
-    .bc-auth-bg
-      width: 100%
-      height: 30%
-      position: relative
-      border-bottom-left-radius: 10px
-      border-bottom-right-radius: 10px
-      background-image: url("../src/assets/ebook-bookshelf.jpg")
-      background-size: cover
-      background-repeat: no-repeat
-      .bc-auth-bg-overlay
-        display: flex
-        flex-direction: column
-        border-bottom-left-radius: 10px
-        border-bottom-right-radius: 10px
-        position: absolute
-        height: 100%
-        width: 100%
-        background-color: rgba(0,0,0,0.6)
-        color: white
-        font-family: "Fira sans"
-        .bc-auth-bg-fcclogo
-          width: 100%
-          height: 15%
-          .bc-auth-bg-logo
-            height: 30px
-            width: 30px
-            background-image: url("../src/assets/glyph.png")
-            background-size: contain
-            background-repeat: no-repeat
-            margin-left: 10px
-            margin-top: 5px
-        .bc-auth-signup
-          display: flex
-          justify-content: flex-start
-          align-items: flex-end
-          width: 100%
-          height: 85%
-          .bc-auth-signup-txt
-            width: 110px
-            // background-color: yellow
-            font-size: 0.75em
-            transform: translateY(-3px)
-            margin-left: 3px
-            color: #d1cdcd
-          .bc-auth-signup-lnk
-            // background-color: pink
-            width: 50px
-            font-size: 0.8em
-            border-radius: 3px
-            cursor: pointer
-            margin-left: 13px
-            transform: translateY(-3px)
-            color: #0ccdab
-            text-decoration: underline
-            &:hover
-              color: #03ffd3
-
-          .bc-auth-techstack
-            height: 90px
-            width: 115px
-            background-color: rgba(0,0,0,0.8)
-            // background-color: pink
-            transform: translate(82px, -40px)
+    width: 100%
+    height: 2px
+    align-self: flex-start
+    .bc-color-strip-01, .bc-color-strip-02, .bc-color-strip-03, .bc-color-strip-04, .bc-color-strip-05, .bc-color-strip-06, .bc-color-strip-07, .bc-color-strip-08, .bc-color-strip-09, .bc-color-strip-10
+      height: 100%
+    .bc-color-strip-01
+      width: 9%
+      background-color: #e41212
+    .bc-color-strip-02
+      width: 12%
+      background-color: #0ef199
+    .bc-color-strip-03
+      width: 8%
+      background-color: #fe6300
+    .bc-color-strip-04
+      width: 9%
+      background-color: #d1f714
+    .bc-color-strip-05
+      width: 14%
+      background-color: #333333
+    .bc-color-strip-06
+      width: 11%
+      background-color: #00f911
+    .bc-color-strip-07
+      width: 6%
+      background-color: #ff147e
+    .bc-color-strip-08
+      width: 12%
+      background-color: #fae800
+    .bc-color-strip-09
+      width: 10%
+      background-color: #f90016
+    .bc-color-strip-10
+      width: 9%
+      background-color: #2e3633
+  .bc-menu-bar
+    display: flex
+    justify-content: flex-end
+    width: 1100px
+    height: 25px
+    margin-top: 4px
+    border-radius: 3px
+    background-color: rgba(0,0,0,0.5)
+    box-shadow: inset 0 0 20px rgba(0,0,0,0.7)
+    color: white
+    .bc-allbooks, .bc-mybooks, .bc-signout, .bc-settings, .bc-signout, .bc-profile
+      display: flex
+      justify-content: center
+      align-items: center
+      font-family: "Fira sans"
+      font-size: 0.75em
+    .bc-profile
+      // align-items: flex-end
+      justify-content: flex-end
+      margin-right: 10px
+    .bc-profile, .bc-settings
+      width: 300px
+      font-size: 0.9em
+    .bc-allbooks, .bc-mybooks, .bc-signout
+      width: 90px
+      height: 100%
+      // background-color: rgba(0,0,0,0.3)
+      cursor: pointer
+      &:hover
+        // background-color: rgba(0,0,0,0.7)
+    .bc-allbooks
+      border-right: 1px solid #d7d7d7
+    .bc-settings
+      width: 32px
+      height: 100%
+      // background-color: rgba(0,0,0,0.3)
+      border-right: 1px solid #d7d7d7
+      cursor: pointer
+      &:hover
+        // background-color: rgba(0,0,0,0.7)
+    .bc-signout

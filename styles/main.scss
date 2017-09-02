@@ -2,4 +2,6 @@
 
 $fa-font-path: "~font-awesome/fonts";
 @import "~font-awesome/scss/font-awesome.scss";
-@import 'components/home';
+
+@import './components/signin_signup';
+@import './components/home';
