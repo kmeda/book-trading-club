@@ -1,14 +1,7 @@
 const jwt = require('jwt-simple');
 const User = require("../models/user");
 
-if (process.env.NODE_ENV === 'production') {
-  var secret = process.env.SECRET;
-} else {
-  const config = require('../config');
-  var secret = config.secret;
-}
-
-
+var secret = process.env.SECRET;
 
 function tokenForUser(user) {
   const timestamp  = new Date().getTime();
