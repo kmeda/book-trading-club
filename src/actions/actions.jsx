@@ -94,6 +94,20 @@ export var passwordConfirmedInvalid = (flag) => {
   }
 }
 
+export var setAuthUser = (flag)=>{
+  return {
+    type: "SET_AUTH_USER",
+    flag
+  }
+}
+
+export var setUnauthUser = (flag)=>{
+  return {
+    type: "SET_UNAUTH_USER",
+    flag
+  }
+}
+
 export var startSignIn = (credentials) => {
   return (dispatch, getState) => {
     //call server and update auth state
@@ -102,16 +116,15 @@ export var startSignIn = (credentials) => {
     axios.post('http://localhost:3050/signin_user', JSON.stringify(credentials)).then((res)=>{
       console.log(res);
       if (res.data.token) {
+        // set state to authorised
+        dispatch(setAuthUser(true));
+        // save to local storage
+        localStorage.setItem('token', res.data.token);
         dispatch(push('/'));
       }
-
     }).catch((e) => {
       console.log(e);
-
-
     });
-
-
   }
 }
 
@@ -124,7 +137,9 @@ export var startSignUp = (credentials) => {
     axios.post('http://localhost:3050/signup_user', JSON.stringify(credentials)).then((res)=>{
 
       if (res.data.token) {
-        console.log(res.data);
+        // set state to authorised
+        dispatch(setAuthUser(true));
+        localStorage.setItem('token', res.data.token);
         dispatch(push('/'));
       } else if (res.data.error === "Email is in use") {
         console.log("Email is in use");

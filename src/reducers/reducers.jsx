@@ -88,6 +88,16 @@ export var authReducer = (state={signIn: '', signUp: ''}, action) => {
           passwordConfirmedInvalid: action.flag
         }
       }
+    case "SET_AUTH_USER":
+      return {
+        ...state,
+        authorised: action.flag
+      }
+      case "SET_UNAUTH_USER":
+        return {
+          ...state,
+          authorised: action.flag
+        }
     default:
       return state;
   }

@@ -4,9 +4,10 @@ import {BrowserRouter as Redirect, Router, Route, Switch, Link} from 'react-rout
 
 import {Provider} from "react-redux";
 
-import Home from './components/Home.jsx';
 import SignIn from './components/SignIn.jsx';
 import SignUp from './components/SignUp.jsx';
+import Home from './components/Home.jsx';
+import AllBooks from './components/AllBooks.jsx';
 
 import '../styles/main.scss';
 
@@ -41,6 +42,7 @@ ReactDOM.render(
       <Router history={history}>
         <Switch>
           <Route exact path="/" component={Home}/>
+          <Route exact path="/allbooks" component={AllBooks}/>
           <Route exact path="/signup" component={SignUp}/>
           <Route exact path="/signin" component={SignIn}/>
           <Route render={()=> <h1>Page not found.</h1>}/>

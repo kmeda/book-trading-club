@@ -1,4 +1,5 @@
 import React,{Component} from 'react';
+import MenuBar from './MenuBar.jsx';
 
 class Home extends Component {
   constructor(props){
@@ -6,27 +7,17 @@ class Home extends Component {
   }
 
   render(){
+    var colorStrip = [];
+    for (var i = 1; i <= 10; i++) {colorStrip.push(<div key={i} className={"bc-color-strip-" +i} ></div>);}
+
     return (
       <div className="bc-outer-wrapper">
-        <div className="bc-color-strip">
-          <div className="bc-color-strip-01"></div>
-          <div className="bc-color-strip-02"></div>
-          <div className="bc-color-strip-03"></div>
-          <div className="bc-color-strip-04"></div>
-          <div className="bc-color-strip-05"></div>
-          <div className="bc-color-strip-06"></div>
-          <div className="bc-color-strip-07"></div>
-          <div className="bc-color-strip-08"></div>
-          <div className="bc-color-strip-09"></div>
-          <div className="bc-color-strip-10"></div>
-        </div>
-
-        <div className="bc-menu-bar">
-          <div className="bc-allbooks">All Books</div>
-          <div className="bc-mybooks">My Books</div>
-          <div className="bc-profile">Karthik Meda</div>
-          <div className="bc-settings"><i className="fa fa-cog" aria-hidden="true"></i></div>
-          <div className="bc-signout">Logout</div>
+        <div className="bc-color-strip">{ colorStrip }</div>
+        <MenuBar/>
+        <div className="bc-books-container">
+          <div>Approve Requests</div>
+          <div>Search Books</div>
+          <div>Add Books</div>
         </div>
       </div>
     )
