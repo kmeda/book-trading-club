@@ -113,7 +113,14 @@ export var startSignIn = (credentials) => {
     //call server and update auth state
       //error or token
     console.log(JSON.stringify(credentials));
-    axios.post('http://localhost:3050/signin_user', JSON.stringify(credentials)).then((res)=>{
+
+    if (process.env.NODE_ENV === 'production') {
+      var url = 'https://fcc-booktrading-club.herokuapp.com/signin_user';
+    } else {
+      var url = 'http://localhost:3050/signin_user';
+    }
+
+    axios.post( url, JSON.stringify(credentials)).then((res)=>{
       console.log(res);
       if (res.data.token) {
         // set state to authorised
@@ -134,7 +141,12 @@ export var startSignUp = (credentials) => {
     //call server and update auth state
       //error or token
     console.log(JSON.stringify(credentials));
-    axios.post('http://localhost:3050/signup_user', JSON.stringify(credentials)).then((res)=>{
+    if (process.env.NODE_ENV === 'production') {
+      var url = 'https://fcc-booktrading-club.herokuapp.com/signup_user';
+    } else {
+      var url = 'http://localhost:3050/signup_user'; 
+    }
+    axios.post(url, JSON.stringify(credentials)).then((res)=>{
 
       if (res.data.token) {
         // set state to authorised
