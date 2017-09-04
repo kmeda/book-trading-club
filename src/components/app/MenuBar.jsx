@@ -2,6 +2,7 @@ import React,{Component} from 'react';
 import * as Redux from 'react-redux';
 import {BrowserRouter as Redirect, Router, Route, Switch, Link} from 'react-router-dom';
 import { push } from 'react-router-redux';
+var actions = require('../../actions/actions.jsx');
 
 class MenuBar extends Component {
   constructor(props){
@@ -11,6 +12,7 @@ class MenuBar extends Component {
   signOutUser(){
     var {dispatch} = this.props;
     localStorage.removeItem('token');
+    dispatch(actions.setUnauthUser(false));
     dispatch(push('/signin'));
   }
 

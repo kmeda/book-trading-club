@@ -2,10 +2,10 @@ import axios from 'axios';
 import { push } from 'react-router-redux';
 
 // Sign In Actions
-export var signingInUser = () => {
+export var signingInUser = (flag) => {
   return {
     type: "SIGNING_IN_USER",
-    signingIn: true
+    flag
   }
 }
 
@@ -94,6 +94,8 @@ export var passwordConfirmedInvalid = (flag) => {
   }
 }
 
+
+
 export var setAuthUser = (flag)=>{
   return {
     type: "SET_AUTH_USER",
@@ -112,6 +114,7 @@ export var startSignIn = (credentials) => {
   return (dispatch, getState) => {
     //call server and update auth state
       //error or token
+    dispatch(signingInUser(true));
     console.log(JSON.stringify(credentials));
 
     if (process.env.NODE_ENV === 'production') {
@@ -128,6 +131,7 @@ export var startSignIn = (credentials) => {
         // save to local storage
         localStorage.setItem('token', res.data.token);
         dispatch(push('/'));
+        dispatch(signingInUser(false));
       }
     }).catch((e) => {
       console.log(e);
@@ -140,11 +144,12 @@ export var startSignUp = (credentials) => {
   return (dispatch, getState) => {
     //call server and update auth state
       //error or token
+    dispatch(signingInUser(true));
     console.log(JSON.stringify(credentials));
     if (process.env.NODE_ENV === 'production') {
       var url = 'https://fcc-booktrading-club.herokuapp.com/signup_user';
     } else {
-      var url = 'http://localhost:3050/signup_user'; 
+      var url = 'http://localhost:3050/signup_user';
     }
     axios.post(url, JSON.stringify(credentials)).then((res)=>{
 
@@ -153,9 +158,14 @@ export var startSignUp = (credentials) => {
         dispatch(setAuthUser(true));
         localStorage.setItem('token', res.data.token);
         dispatch(push('/'));
+        dispatch(signingInUser(false));
       } else if (res.data.error === "Email is in use") {
         console.log("Email is in use");
       }
-    }).catch((e) => console.log(e));;
+    }).catch((e) => {
+      // handle dispatch error state
+      dispatch(signingInUser(false));
+      console.log(e);
+    });
   }
 }

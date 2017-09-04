@@ -3,7 +3,7 @@ export var authReducer = (state={signIn: '', signUp: ''}, action) => {
     case "SIGNING_IN_USER":
       return {
         ...state,
-        signingIn: true
+        signingIn: action.flag
       };
     case "INVALID_EMAIL_PASSWORD_ERROR":
       return {
@@ -91,13 +91,13 @@ export var authReducer = (state={signIn: '', signUp: ''}, action) => {
     case "SET_AUTH_USER":
       return {
         ...state,
-        authorised: action.flag
+        authenticated: action.flag
       }
-      case "SET_UNAUTH_USER":
-        return {
-          ...state,
-          authorised: action.flag
-        }
+    case "SET_UNAUTH_USER":
+      return {
+        ...state,
+        authenticated: action.flag
+      }
     default:
       return state;
   }

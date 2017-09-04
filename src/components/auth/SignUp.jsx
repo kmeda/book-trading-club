@@ -1,7 +1,7 @@
 import React,{Component} from 'react';
 import {BrowserRouter as Router, Route, Switch, Link, withRouter} from 'react-router-dom';
 import * as Redux from "react-redux";
-var actions = require('../actions/actions.jsx');
+var actions = require('../../actions/actions.jsx');
 
 
 class SignUp extends Component {
@@ -168,7 +168,7 @@ class SignUp extends Component {
                 </div>
                 <br />
                 {
-                  this.props.auth.signingUp ?
+                  this.props.auth.signingIn ?
                   <button onClick={(e)=>e.preventDefault()}><i className="fa fa-spinner fa-pulse"></i></button> :
                   <button onClick={this.handleSignUp.bind(this)}>Sign Up</button>
                 }
@@ -181,7 +181,6 @@ class SignUp extends Component {
                 <div className="bc-auth-signup">
                   <div className="bc-auth-signup-txt">Already a member ?</div>
                   <Link to={"/signin"}><div className="bc-auth-signup-lnk">Sign In</div></Link>
-                  <div className="bc-auth-techstack"></div>
                 </div>
               </div>
             </div>

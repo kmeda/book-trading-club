@@ -1,7 +1,7 @@
 import React,{Component} from 'react';
 import {BrowserRouter as Router, Route, Switch, Link, withRouter} from 'react-router-dom';
 import * as Redux from "react-redux";
-var actions = require('../actions/actions.jsx');
+var actions = require('../../actions/actions.jsx');
 
 class SignIn extends Component {
   constructor(props){
@@ -100,9 +100,6 @@ class SignIn extends Component {
                 <div className="bc-auth-signup">
                   <div className="bc-auth-signup-txt">Not a member yet ?</div>
                   <Link to={"/signup"}><div className="bc-auth-signup-lnk">Sign Up</div></Link>
-                  <div className="bc-auth-techstack">
-
-                  </div>
                 </div>
 
               </div>

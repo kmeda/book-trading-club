@@ -4,10 +4,11 @@ import {BrowserRouter as Redirect, Router, Route, Switch, Link} from 'react-rout
 
 import {Provider} from "react-redux";
 
-import SignIn from './components/SignIn.jsx';
-import SignUp from './components/SignUp.jsx';
-import Home from './components/Home.jsx';
-import AllBooks from './components/AllBooks.jsx';
+import RequireAuth from './components/auth/require_auth.jsx';
+import SignIn from './components/auth/SignIn.jsx';
+import SignUp from './components/auth/SignUp.jsx';
+import Home from './components/app/Home.jsx';
+import AllBooks from './components/app/AllBooks.jsx';
 
 import '../styles/main.scss';
 
@@ -36,13 +37,19 @@ const store = Redux.createStore(
   )
 )
 
+
+if (localStorage.getItem("token")) {
+  store.dispatch(actions.setAuthUser(true));
+}
+
+
 ReactDOM.render(
     <Provider store={store}>
 
       <Router history={history}>
         <Switch>
-          <Route exact path="/" component={Home}/>
-          <Route exact path="/allbooks" component={AllBooks}/>
+          <Route exact path="/" component={RequireAuth(Home)}/>
+          <Route exact path="/allbooks" component={RequireAuth(AllBooks)}/>
           <Route exact path="/signup" component={SignUp}/>
           <Route exact path="/signin" component={SignIn}/>
           <Route render={()=> <h1>Page not found.</h1>}/>
