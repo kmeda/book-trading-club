@@ -9,7 +9,7 @@ export var authReducer = (state={signIn: '', signUp: ''}, action) => {
       return {
         ...state,
         signIn: { ...state.signIn,
-          invalidCredentials: action.error
+          invalidCredentials: action.alert
         }
       };
     case "EMPTY_EMAIL_ERROR":

@@ -159,6 +159,7 @@ class SignUp extends Component {
                 <br/>
                 <div className="bc-input-style">
                   <div className="bc-input-icon fa fa-key">
+                    {this.props.auth.signIn.invalidCredentials ? <p className='bc-auth-error'>{this.props.auth.signIn.invalidCredentials}</p> : null}
                     {this.props.auth.signUp.passwordConfirmed ? <i className="fa fa-check bc-input-valid"></i> : null}
                     {this.props.auth.signUp.passwordConfirmedInvalid ? <i className="fa fa-times bc-input-invalid"></i> : null}
                   </div>

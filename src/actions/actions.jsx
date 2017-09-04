@@ -9,10 +9,10 @@ export var signingInUser = (flag) => {
   }
 }
 
-export var invalidEmailandPasswordError = () => {
+export var invalidEmailorPasswordError = (alert) => {
   return {
     type: "INVALID_EMAIL_PASSWORD_ERROR",
-    error: "Invalid Credentials"
+    alert
   }
 }
 
@@ -134,7 +134,18 @@ export var startSignIn = (credentials) => {
         dispatch(signingInUser(false));
       }
     }).catch((e) => {
-      console.log(e);
+      dispatch(signingInUser(false));
+
+      if (e.response) {
+        console.log(e);
+        if (e.response.data === "Unauthorized") {
+          dispatch(invalidEmailorPasswordError("Invalid Email or Password"));
+        }
+      } else {
+        dispatch(invalidEmailorPasswordError("Server unreachable :("));
+      }
+
+
     });
   }
 }
@@ -161,10 +172,13 @@ export var startSignUp = (credentials) => {
         dispatch(signingInUser(false));
       } else if (res.data.error === "Email is in use") {
         console.log("Email is in use");
+        dispatch(signingInUser(false));
+        dispatch(invalidEmailorPasswordError(res.data.error));
       }
     }).catch((e) => {
       // handle dispatch error state
       dispatch(signingInUser(false));
+      dispatch(invalidEmailorPasswordError("Server unreachable :("));
       console.log(e);
     });
   }

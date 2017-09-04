@@ -76,7 +76,7 @@ class SignIn extends Component {
 
                 <div className="bc-input-style">
                   <div className="bc-input-icon fa fa-key">
-                    {this.props.auth.signIn.invalidCredentials ? <p className='bc-auth-error'>Invalid Email or Password</p> : null}
+                    {this.props.auth.signIn.invalidCredentials ? <p className='bc-auth-error'>{this.props.auth.signIn.invalidCredentials}</p> : null}
                     {this.props.auth.signIn.noPassword ? <p className='bc-input-error'>Password Required</p> : null}
                   </div>
                     <input placeholder="Password" type="password" ref="password" />
