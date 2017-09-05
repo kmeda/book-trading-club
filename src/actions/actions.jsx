@@ -141,6 +141,7 @@ export var startSignIn = (credentials) => {
         // set state to authorised
         dispatch(setAuthUser(true));
         dispatch(setUserName(credentials.email));
+        // dispatch(fetchUserDetails(auth.userName));
         // save to local storage
         localStorage.setItem('token', res.data.token);
         dispatch(push('/'));

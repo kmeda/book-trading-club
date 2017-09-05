@@ -2,6 +2,7 @@ import React,{Component} from 'react';
 import * as Redux from 'react-redux';
 import {BrowserRouter as Redirect, Router, Route, Switch, Link} from 'react-router-dom';
 import { push } from 'react-router-redux';
+import _ from 'lodash';
 var actions = require('../../actions/actions.jsx');
 
 class MenuBar extends Component {
@@ -13,12 +14,17 @@ class MenuBar extends Component {
     //request user details from server and update state
     var {dispatch, auth} = this.props;
     console.log(auth.userName);
-    dispatch(actions.fetchUserDetails(auth.userName));
+    if (!auth.user) {
+      dispatch(actions.fetchUserDetails(auth.userName));
+    }
+
   }
 
   componentDidMount(){
-    var {dispatch} = this.props;
-    dispatch(actions.setSettingsOn(false));
+    var {dispatch, settings} = this.props;
+    if (settings.settingsOn) {
+      dispatch(actions.setSettingsOn(false));
+    }
   }
 
   updateSettings(){
@@ -31,12 +37,14 @@ class MenuBar extends Component {
     var {dispatch, auth} = this.props;
 
     var email = auth.userName;
-    var firstName = this.refs.firstname.value;
-    var lastName = this.refs.lastname.value;
-    var location = this.refs.location.value;
+    var firstName = _.trim(this.refs.firstname.value);
+    var lastName = _.trim(this.refs.lastname.value);
+    var location = _.trim(this.refs.location.value);
 
+    if (firstName === '' || lastName === '' || location === '') {
+      return;
+    }
     var settings = {email, firstName, lastName, location};
-
     dispatch(actions.saveUserSettings(settings));
   }
 
@@ -58,9 +66,9 @@ class MenuBar extends Component {
             <form className="bc-settings-form">
               <div>Profile Settings</div>
               <br/>
-              <input className="bc-settings-input" type="text" placeholder="First Name" ref="firstname"/>
-              <input className="bc-settings-input" type="text" placeholder="Last Name" ref="lastname"/>
-              <input className="bc-settings-input" type="text" placeholder="Location" ref="location"/>
+              <input className="bc-settings-input" type="text" placeholder={"First Name - "+this.props.auth.user.firstName || "First Name"} ref="firstname"/>
+              <input className="bc-settings-input" type="text" placeholder={"Last Name - "+this.props.auth.user.lastName || "Last Name"} ref="lastname"/>
+              <input className="bc-settings-input" type="text" placeholder={"Location - "+this.props.auth.user.location || "Location"} ref="location"/>
                 <br/>
                 {
                   this.props.settings.saveSettings ?
