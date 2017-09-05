@@ -25,7 +25,7 @@ class MenuBar extends Component {
           <div className="bc-profile">Karthik Meda</div>
           <div className="bc-notification"><i className="fa fa-bell" aria-hidden="true"></i></div>
           <div className="bc-settings"><i className="fa fa-cog" aria-hidden="true"></i></div>
-          <div className="bc-signout" onClick={this.signOutUser.bind(this)}><i className="fa fa-sign-out" aria-hidden="true"></i></div>
+          <div className="bc-signout"><i className="bc-animate-logout fa fa-sign-out" aria-hidden="true" onClick={this.signOutUser.bind(this)}></i></div>
         </div>
       </div>
     )
