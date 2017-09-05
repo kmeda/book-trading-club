@@ -98,7 +98,54 @@ export var authReducer = (state={signIn: '', signUp: ''}, action) => {
         ...state,
         authenticated: action.flag
       }
+    case "SET_USER_NAME":
+      return {
+        ...state,
+        userName: action.email
+      }
+    case "SET_USER_DETAILS":
+      return {
+        ...state,
+        user: action.payload
+      }
+    case "REMOVE_USER_DETAILS":
+      return {
+        ...state,
+        user: null
+      }
     default:
       return state;
+  }
+}
+
+export var booksReducer = (state={}, action) => {
+  switch (action.type) {
+    case "REQUESTS_PENDING":
+      return {
+        ...state,
+        requestsPending: action.payload
+      }
+
+    default:
+    return state;
+
+  }
+}
+
+export var settingsReducer = (state={}, action) => {
+  switch (action.type) {
+    case "SET_SETTINGS_ON":
+      return {
+        ...state,
+        settingsOn: action.flag
+      }
+    case "ON_SAVE_SETTINGS":
+      return {
+        ...state,
+        saveSettings: action.flag
+      }
+    default:
+    return state;
+
   }
 }

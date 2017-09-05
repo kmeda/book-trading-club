@@ -110,6 +110,13 @@ export var setUnauthUser = (flag)=>{
   }
 }
 
+export var setUserName = (email)=>{
+  return {
+    type: "SET_USER_NAME",
+    email
+  }
+}
+
 export var startSignIn = (credentials) => {
   return (dispatch, getState) => {
     //call server and update auth state
@@ -128,9 +135,11 @@ export var startSignIn = (credentials) => {
       if (res.data.token) {
         // set state to authorised
         dispatch(setAuthUser(true));
+        dispatch(setUserName(credentials.email));
         // save to local storage
         localStorage.setItem('token', res.data.token);
         dispatch(push('/'));
+
         dispatch(signingInUser(false));
       }
     }).catch((e) => {
@@ -181,5 +190,74 @@ export var startSignUp = (credentials) => {
       dispatch(invalidEmailorPasswordError("Server unreachable :("));
       console.log(e);
     });
+  }
+}
+
+
+// Books Reducer Actions
+
+// Settings Reducer
+export var setSettingsOn = (flag) => {
+  return {
+    type: "SET_SETTINGS_ON",
+    flag
+  }
+}
+
+export var onSaveSettings = (flag) => {
+  return {
+    type: "ON_SAVE_SETTINGS",
+    flag
+  }
+}
+
+export var setUserDetails = (payload) => {
+  return {
+    type: "SET_USER_DETAILS",
+    payload
+  }
+}
+
+export var removeUserDetails = () => {
+  return {
+    type: "REMOVE_USER_DETAILS"
+  }
+}
+
+export var saveUserSettings = (settings) => {
+  return(dispatch, getState) => {
+
+    //set save progress
+    dispatch(onSaveSettings(true));
+
+    if (process.env.NODE_ENV === 'production') {
+      var url = 'https://fcc-booktrading-club.herokuapp.com/update_user';
+    } else {
+      var url = 'http://localhost:3050/update_user';
+    }
+    var headers = {
+           "Content-Type": "application/json",
+           'Accept' : 'application/json',
+           "authorization": localStorage.getItem('token')
+       }
+
+
+    axios.post(url, JSON.stringify(settings), headers).then((res)=>{
+      console.log(res);
+        dispatch(setUserDetails(settings));
+        dispatch(onSaveSettings(false));
+        dispatch(setSettingsOn(false));
+      });
+
+    // setTimeout(()=>{
+    //   //send data to server
+    //   //receive data from server
+    //
+    //   //set userName state
+    //   dispatch(setUserDetails(settings));
+    //   dispatch(onSaveSettings(false));
+    //   dispatch(setSettingsOn(false));
+    // }, 2000);
+
   }
 }

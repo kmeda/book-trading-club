@@ -34,10 +34,15 @@ const jwtOptions = {
   secretOrKey: secret
 };
 
+console.log(jwtOptions);
+
 const jwtLogin = new JwtStrategy(jwtOptions, function(payload, done){
+console.log("Hola!!!!!!!");
 
   User.findById(payload.sub, function(err, user){
-    if (err) { return done(err, false)};
+    if (err) {
+      console.log("Caught!");
+      return done(err, false)};
 
     if (user) {
       return done(null, user);

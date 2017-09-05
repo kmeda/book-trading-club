@@ -16,6 +16,7 @@ mongoose.connect('mongodb://admin:admin@ds153003.mlab.com:53003/fcc-book-club', 
 app.use(morgan('combined'));
 app.use(cors());
 app.use(bodyParser.json({type: '*/*'}));
+// app.use(bodyParser.urlencoded({ extended: true }));
 app.use(favicon(path.join(__dirname + '/favicon.ico')));
 app.use(express.static('dist'));
 

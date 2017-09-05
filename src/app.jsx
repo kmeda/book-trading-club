@@ -20,7 +20,9 @@ import createHistory from 'history/createBrowserHistory';
 import { ConnectedRouter, routerReducer, routerMiddleware, push } from 'react-router-redux';
 
 
-import {  authReducer
+import {  authReducer,
+          booksReducer,
+          settingsReducer
           } from './reducers/reducers.jsx';
 
 const history = createHistory();
@@ -29,6 +31,8 @@ const middleware = routerMiddleware(history);
 const store = Redux.createStore(
   Redux.combineReducers({
     auth: authReducer,
+    books: booksReducer,
+    settings: settingsReducer,
     router: routerReducer
   }),
   Redux.compose(
