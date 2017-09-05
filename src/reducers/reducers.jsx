@@ -103,6 +103,11 @@ export var authReducer = (state={signIn: '', signUp: ''}, action) => {
         ...state,
         userName: action.email
       }
+    case "REMOVE_USER_NAME":
+      return {
+        ...state,
+        userName: null
+      }
     case "SET_USER_DETAILS":
       return {
         ...state,

@@ -25,3 +25,18 @@ exports.update = function(req, res, next){
         }
     });
 }
+
+exports.fetchUser = function(req, res, next) {
+
+    const email = req.query.email;
+    User.findOne({email: email}, function(err, user){
+
+        if(err) {return next(err)};
+
+        if(user) {
+          var userDetails = {firstName: user.firstName, lastName: user.lastName, location: user.location}
+          res.send(userDetails);
+        }
+    });
+
+}

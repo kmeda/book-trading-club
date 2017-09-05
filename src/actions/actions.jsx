@@ -117,6 +117,12 @@ export var setUserName = (email)=>{
   }
 }
 
+export var removeUserName = ()=>{
+  return {
+    type: "REMOVE_USER_NAME"
+  }
+}
+
 export var startSignIn = (credentials) => {
   return (dispatch, getState) => {
     //call server and update auth state
@@ -131,7 +137,6 @@ export var startSignIn = (credentials) => {
     }
 
     axios.post( url, JSON.stringify(credentials)).then((res)=>{
-      console.log(res);
       if (res.data.token) {
         // set state to authorised
         dispatch(setAuthUser(true));
@@ -224,6 +229,22 @@ export var removeUserDetails = () => {
   }
 }
 
+export var fetchUserDetails = (email) => {
+  return (dispatch, getState) => {
+
+    if (process.env.NODE_ENV === 'production') {
+      var url = 'https://fcc-booktrading-club.herokuapp.com/get_user';
+    } else {
+      var url = 'http://localhost:3050/get_user';
+    }
+
+    axios.get(`${url}?email=${email}`, {}).then((res) => {
+      console.log(res);
+      dispatch(setUserDetails(res.data));
+    });
+  }
+}
+
 export var saveUserSettings = (settings) => {
   return(dispatch, getState) => {
 
@@ -248,16 +269,5 @@ export var saveUserSettings = (settings) => {
         dispatch(onSaveSettings(false));
         dispatch(setSettingsOn(false));
       });
-
-    // setTimeout(()=>{
-    //   //send data to server
-    //   //receive data from server
-    //
-    //   //set userName state
-    //   dispatch(setUserDetails(settings));
-    //   dispatch(onSaveSettings(false));
-    //   dispatch(setSettingsOn(false));
-    // }, 2000);
-
   }
 }

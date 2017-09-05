@@ -16,4 +16,5 @@ module.exports = function(app) {
   app.post('/signup_user', Authentication.signup);
 
   app.post('/update_user', updateUser.update);
+  app.get('/get_user', updateUser.fetchUser);
 }

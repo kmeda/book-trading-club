@@ -11,6 +11,9 @@ class MenuBar extends Component {
 
   componentWillMount(){
     //request user details from server and update state
+    var {dispatch, auth} = this.props;
+    console.log(auth.userName);
+    dispatch(actions.fetchUserDetails(auth.userName));
   }
 
   componentDidMount(){
@@ -43,6 +46,7 @@ class MenuBar extends Component {
 
     // on logout nuke everything except signin signup
     dispatch(actions.removeUserDetails());
+    dispatch(actions.removeUserName());
     dispatch(actions.setUnauthUser(false));
     dispatch(push('/signin'));
   }
