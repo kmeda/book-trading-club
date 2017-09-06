@@ -200,7 +200,7 @@ export var fetchUserDetails = (email) => {
 
     axios.get(`${base_url}/get_user?email=${email}`).then((res) => {
       dispatch(setUserDetails(res.data));
-    });
+    }).catch((e)=>console.log(e));
   }
 }
 
