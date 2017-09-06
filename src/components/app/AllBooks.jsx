@@ -1,9 +1,19 @@
 import React,{Component} from 'react';
 import MenuBar from './MenuBar.jsx';
+import * as Redux from "react-redux";
 
 class AllBooks extends Component {
   constructor(props){
     super(props);
+    this.state = {setClass: null}
+  }
+
+  componentDidMount(){
+    this.setState({setClass: "bc-allbooks-active"});
+  }
+
+  componentWillUnmount(){
+    this.setState({setClass: ""});
   }
 
   render(){
@@ -13,7 +23,7 @@ class AllBooks extends Component {
     return (
       <div className="bc-outer-wrapper">
         <div className="bc-color-strip">{ colorStrip }</div>
-        <MenuBar/>
+        <MenuBar allBooksActive={this.state.setClass}/>
         <div className="bc-books-container">
           <div>Render all books with request option.</div>
         </div>
@@ -22,4 +32,10 @@ class AllBooks extends Component {
   }
 }
 
-export default AllBooks;
+export default Redux.connect(
+  (state) => {
+    return {
+      books: state.books
+    }
+  }
+)(AllBooks);

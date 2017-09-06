@@ -89,8 +89,8 @@ class MenuBar extends Component {
     return (
       <div>
           <div className="bc-menu-bar">
-          <div className="bc-mybooks"><Link to='/'>My Books</Link></div>
-          <div className="bc-allbooks"><Link to='/allbooks'>All Books</Link></div>
+          <div className={this.props.myBooksActive + " bc-mybooks"}><Link to='/'>My Books</Link></div>
+          <div className={this.props.allBooksActive + " bc-allbooks"}><Link to='/allbooks'>All Books</Link></div>
 
           <div className="bc-profile">
             {(Object.keys(this.props.auth.user)).length <= 0 ? null : this.props.auth.user.firstName + " " + this.props.auth.user.lastName}
