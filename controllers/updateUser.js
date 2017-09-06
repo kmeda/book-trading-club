@@ -38,16 +38,12 @@ exports.update = function(req, res, next){
 }
 
 exports.fetchUser = function(req, res, next) {
-  const jwtOptions = {
-    jwtFromRequest: ExtractJwt.fromHeader('authorization'),
-    secretOrKey: secret
-  };
 
     const email = req.query.email;
     console.log("Email request param", email);
     User.findOne({email: email}, function(err, user){
 
-        if(err) {return next(err)};
+        // if(err) {return next(err)};
 
         if(user) {
           var userDetails = {firstName: user.firstName, lastName: user.lastName, location: user.location}

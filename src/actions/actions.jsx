@@ -198,7 +198,7 @@ export var setUserDetails = (payload) => {
 export var fetchUserDetails = (email) => {
   return (dispatch, getState) => {
 
-    axios.get(`${base_url}/get_user?email=${email}`, {headers: {authorization: localStorage.getItem("token")}}).then((res) => {
+    axios.get(`${base_url}/get_user?email=${email}`).then((res) => {
       dispatch(setUserDetails(res.data));
     });
   }
