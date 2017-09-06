@@ -103,7 +103,7 @@ class MenuBar extends Component {
 
           <div className={this.props.settings.showSettings ? "bc-settings bc-settings-clicked" : "bc-settings" }>
             <i className="fa fa-cog" aria-hidden="true" onClick={this.showSettings.bind(this)}>
-              {this.props.auth.user? null : <div className="bc-settings-alert"><i className="fa fa-exclamation" aria-hidden="true"></i></div>}
+              {(Object.keys(this.props.auth.user)).length <= 0 ? <div className="bc-settings-alert"><i className="fa fa-exclamation" aria-hidden="true"></i></div> : null }
 
             </i>
             {this.props.settings.showSettings ? renderSettingsBox() : null}
