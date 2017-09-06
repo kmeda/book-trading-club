@@ -23,14 +23,14 @@ class MenuBar extends Component {
 
   componentDidMount(){
     var {dispatch, settings} = this.props;
-    if (settings.settingsOn) {
-      dispatch(actions.setSettingsOn(false));
+    if (settings.showSettings) {
+      dispatch(actions.showSettings(false));
     }
   }
 
   updateSettings(){
     var {dispatch, settings} = this.props;
-    settings.settingsOn ? dispatch(actions.setSettingsOn(false)) : dispatch(actions.setSettingsOn(true));
+    settings.showSettings ? dispatch(actions.showSettings(false)) : dispatch(actions.showSettings(true));
   }
 
   saveSettings(e){
@@ -68,9 +68,9 @@ class MenuBar extends Component {
             <form className="bc-settings-form">
               <div>Profile Settings</div>
               <br/>
-              <input className="bc-settings-input" type="text" placeholder={this.props.auth.user.length < 0 ? "First Name" : "First Name -" + this.props.auth.user.firstName} ref="firstname"/>
-              <input className="bc-settings-input" type="text" placeholder={this.props.auth.user.length < 0 ? "Last Name" : "Last Name -" + this.props.auth.user.lastName} ref="lastname"/>
-              <input className="bc-settings-input" type="text" placeholder={this.props.auth.user.length < 0 ? "Location" : "Location -" + this.props.auth.user.location} ref="location"/>
+              <input className="bc-settings-input" type="text" placeholder={(Object.keys(this.props.auth.user)).length <= 0 ? "First Name" : "First Name -" + this.props.auth.user.firstName} ref="firstname"/>
+              <input className="bc-settings-input" type="text" placeholder={(Object.keys(this.props.auth.user)).length <= 0 ? "Last Name" : "Last Name -" + this.props.auth.user.lastName} ref="lastname"/>
+              <input className="bc-settings-input" type="text" placeholder={(Object.keys(this.props.auth.user)).length <= 0 ? "Location" : "Location -" + this.props.auth.user.location} ref="location"/>
                 <br/>
                 {
                   this.props.settings.saveSettings ?
@@ -89,7 +89,7 @@ class MenuBar extends Component {
           <div className="bc-allbooks"><Link to='/allbooks'>All Books</Link></div>
 
           <div className="bc-profile">
-            {this.props.auth.user? this.props.auth.user.firstName + " " + this.props.auth.user.lastName : null}
+            {(Object.keys(this.props.auth.user)).length <= 0 ? null : this.props.auth.user.firstName + " " + this.props.auth.user.lastName}
           </div>
           <div className="bc-notification">
             <i className="fa fa-bell" aria-hidden="true">
@@ -97,12 +97,12 @@ class MenuBar extends Component {
             </i>
           </div>
 
-          <div className={this.props.settings.settingsOn ? "bc-settings bc-settings-clicked" : "bc-settings" }>
+          <div className={this.props.settings.showSettings ? "bc-settings bc-settings-clicked" : "bc-settings" }>
             <i className="fa fa-cog" aria-hidden="true" onClick={this.updateSettings.bind(this)}>
               {this.props.auth.user? null : <div className="bc-settings-alert"><i className="fa fa-exclamation" aria-hidden="true"></i></div>}
 
             </i>
-            {this.props.settings.settingsOn ? renderSettingsBox() : null}
+            {this.props.settings.showSettings ? renderSettingsBox() : null}
           </div>
 
           <div className="bc-signout"><i className="bc-animate-logout fa fa-sign-out" aria-hidden="true" onClick={this.signOutUser.bind(this)}></i></div>

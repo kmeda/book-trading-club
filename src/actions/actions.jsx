@@ -151,8 +151,8 @@ export var startSignUp = (credentials) => {
       if (res.data.token) {
         localStorage.setItem('email', credentials.email);
         localStorage.setItem('token', res.data.token);
+        dispatch(clearErrorMsg());
         dispatch(setAuthenticated(true));
-        dispatch(signingInUser(false));
         dispatch(push('/'));
       } else if (res.data.error === "Email is in use") {
         console.log("Email is in use");
@@ -172,16 +172,16 @@ export var startSignUp = (credentials) => {
 // Books Reducer Actions
 
 // Settings Reducer
-export var setSettingsOn = (flag) => {
+export var showSettings = (flag) => {
   return {
-    type: "SET_SETTINGS_ON",
+    type: "SHOW_SETTINGS",
     flag
   }
 }
 
-export var onSaveSettings = (flag) => {
+export var saveSettings = (flag) => {
   return {
-    type: "ON_SAVE_SETTINGS",
+    type: "SAVE_SETTINGS",
     flag
   }
 }
@@ -208,7 +208,7 @@ export var saveUserSettings = (settings) => {
   return(dispatch, getState) => {
 
     //set save progress
-    dispatch(onSaveSettings(true));
+    dispatch(saveSettings(true));
 
 
     var headers = {
@@ -221,8 +221,8 @@ export var saveUserSettings = (settings) => {
     axios.post(`${base_url}/update_user`, JSON.stringify(settings), headers).then((res)=>{
       console.log(res);
         dispatch(setUserDetails(settings));
-        dispatch(onSaveSettings(false));
-        dispatch(setSettingsOn(false));
+        dispatch(saveSettings(false));
+        dispatch(showSettings(false));
       });
   }
 }

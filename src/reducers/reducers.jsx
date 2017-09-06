@@ -125,12 +125,12 @@ export var booksReducer = (state={}, action) => {
 
 export var settingsReducer = (state={}, action) => {
   switch (action.type) {
-    case "SET_SETTINGS_ON":
+    case "SHOW_SETTINGS":
       return {
         ...state,
-        settingsOn: action.flag
+        showSettings: action.flag
       }
-    case "ON_SAVE_SETTINGS":
+    case "SAVE_SETTINGS":
       return {
         ...state,
         saveSettings: action.flag
