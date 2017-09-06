@@ -13,9 +13,10 @@ class MenuBar extends Component {
   componentWillMount(){
     //request user details from server and update state
     var {dispatch, auth} = this.props;
-    console.log(auth.userName);
+
     if (!auth.user) {
-      dispatch(actions.fetchUserDetails(auth.userName));
+      var email = localStorage.getItem("email");
+      dispatch(actions.fetchUserDetails(email));
     }
 
   }
@@ -36,7 +37,7 @@ class MenuBar extends Component {
     e.preventDefault();
     var {dispatch, auth} = this.props;
 
-    var email = auth.userName;
+    var email = localStorage.getItem("email");
     var firstName = _.trim(this.refs.firstname.value);
     var lastName = _.trim(this.refs.lastname.value);
     var location = _.trim(this.refs.location.value);
@@ -51,24 +52,25 @@ class MenuBar extends Component {
   signOutUser(){
     var {dispatch} = this.props;
     localStorage.removeItem('token');
-
-    // on logout nuke everything except signin signup
+    localStorage.removeItem('email');
     dispatch(actions.removeUserDetails());
-    dispatch(actions.removeUserName());
-    dispatch(actions.setUnauthUser(false));
     dispatch(push('/signin'));
   }
 
   render(){
+    if (!this.props.auth.user) {
+      return <div>Loading....</div>
+    }
+
     var renderSettingsBox = () => {
       return (
         <div className="bc-settings-box">
             <form className="bc-settings-form">
               <div>Profile Settings</div>
               <br/>
-              <input className="bc-settings-input" type="text" placeholder={"First Name - "+this.props.auth.user.firstName || "First Name"} ref="firstname"/>
-              <input className="bc-settings-input" type="text" placeholder={"Last Name - "+this.props.auth.user.lastName || "Last Name"} ref="lastname"/>
-              <input className="bc-settings-input" type="text" placeholder={"Location - "+this.props.auth.user.location || "Location"} ref="location"/>
+              <input className="bc-settings-input" type="text" placeholder={this.props.auth.user.length < 0 ? "First Name" : "First Name -" + this.props.auth.user.firstName} ref="firstname"/>
+              <input className="bc-settings-input" type="text" placeholder={this.props.auth.user.length < 0 ? "Last Name" : "Last Name -" + this.props.auth.user.lastName} ref="lastname"/>
+              <input className="bc-settings-input" type="text" placeholder={this.props.auth.user.length < 0 ? "Location" : "Location -" + this.props.auth.user.location} ref="location"/>
                 <br/>
                 {
                   this.props.settings.saveSettings ?
@@ -87,7 +89,7 @@ class MenuBar extends Component {
           <div className="bc-allbooks"><Link to='/allbooks'>All Books</Link></div>
 
           <div className="bc-profile">
-            {this.props.auth.user ? this.props.auth.user.firstName + " " + this.props.auth.user.lastName : null}
+            {this.props.auth.user? this.props.auth.user.firstName + " " + this.props.auth.user.lastName : null}
           </div>
           <div className="bc-notification">
             <i className="fa fa-bell" aria-hidden="true">
@@ -97,7 +99,7 @@ class MenuBar extends Component {
 
           <div className={this.props.settings.settingsOn ? "bc-settings bc-settings-clicked" : "bc-settings" }>
             <i className="fa fa-cog" aria-hidden="true" onClick={this.updateSettings.bind(this)}>
-              {this.props.auth.user ? null : <div className="bc-settings-alert"><i className="fa fa-exclamation" aria-hidden="true"></i></div>}
+              {this.props.auth.user? null : <div className="bc-settings-alert"><i className="fa fa-exclamation" aria-hidden="true"></i></div>}
 
             </i>
             {this.props.settings.settingsOn ? renderSettingsBox() : null}
@@ -119,10 +121,3 @@ export default Redux.connect(
     }
   }
 )(MenuBar);
-
-// notifications for approvals
-  // websocket - red indication - onclick display all requests - unless component mounted
-// settings
-  // dialog box with form - save to database and fetch user settings immediately after save
-// logout
-  // clear user state and localstorage token

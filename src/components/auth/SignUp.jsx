@@ -10,9 +10,12 @@ class SignUp extends Component {
   }
 
   componentWillUnmount(){
-    var {dispatch} = this.props;
-    dispatch(actions.clearErrorMsg());
+    var {dispatch, auth} = this.props;
+    if (auth.signIn || auth.signUp) {
+      dispatch(actions.clearErrorMsg());
+    }
   }
+
 
   handleSignUp(e){
     e.preventDefault();
@@ -32,13 +35,12 @@ class SignUp extends Component {
       }
       return;
     }
-    // dispatch action to send credentials to server and receive token then redirect to app
+
     if (auth.signUp.emailValid && auth.signUp.passwordValid && auth.signUp.passwordConfirmed) {
       dispatch(actions.startSignUp(credentials));
     }
 
   }
-  //
 
   handleFieldChange(){
     var {dispatch} = this.props;
@@ -57,7 +59,6 @@ class SignUp extends Component {
     }
 
     if (passwordConfirm === password) {
-      //success case
       dispatch(actions.passwordConfirmedInvalid(false));
       dispatch(actions.passwordConfirmed(true));
     }
@@ -84,9 +85,6 @@ class SignUp extends Component {
       dispatch(actions.emailValid(true));
       dispatch(actions.emailInValid(false));
     }
-
-
-
   }
 
   handlePasswordValidity(){

@@ -14,12 +14,14 @@ export default function(ComposedComponent) {
 
     componentWillUpdate(nextProps) {
       var {dispatch} = this.props;
+
       if (!nextProps.auth.authenticated) {
         dispatch(push('/signin'));
       }
     }
 
     render() {
+
       return <ComposedComponent {...this.props} />
     }
   }

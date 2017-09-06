@@ -16,14 +16,14 @@ export var authReducer = (state={signIn: '', signUp: ''}, action) => {
       return {
         ...state,
         signIn: { ...state.signIn,
-          noEmail: action.error
+          noEmail: true
         }
       };
     case "EMPTY_PASSWORD_ERROR":
       return {
         ...state,
         signIn: { ...state.signIn,
-          noPassword: action.error
+          noPassword: true
         }
       };
     case "CLEAR_ERROR_MSG":
@@ -93,22 +93,8 @@ export var authReducer = (state={signIn: '', signUp: ''}, action) => {
         ...state,
         authenticated: action.flag
       }
-    case "SET_UNAUTH_USER":
-      return {
-        ...state,
-        authenticated: action.flag
-      }
-    case "SET_USER_NAME":
-      return {
-        ...state,
-        userName: action.email
-      }
-    case "REMOVE_USER_NAME":
-      return {
-        ...state,
-        userName: null
-      }
-    case "SET_USER_DETAILS":
+    
+   case "SET_USER_DETAILS":
       return {
         ...state,
         user: action.payload
@@ -117,6 +103,11 @@ export var authReducer = (state={signIn: '', signUp: ''}, action) => {
       return {
         ...state,
         user: null
+      }
+    case "FETCHING_USER_DETAILS":
+      return {
+        ...state,
+        fetchingUserDetails: action.flag
       }
     default:
       return state;

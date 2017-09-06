@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { push } from 'react-router-redux';
 
-// Sign In Actions
+// SignIn Actions
 export var signingInUser = (flag) => {
   return {
     type: "SIGNING_IN_USER",
@@ -18,15 +18,13 @@ export var invalidEmailorPasswordError = (alert) => {
 
 export var emptyEmailError = () => {
   return {
-    type: "EMPTY_EMAIL_ERROR",
-    error: "Empty Email"
+    type: "EMPTY_EMAIL_ERROR"
   }
 }
 
 export var emptyPasswordError = () => {
   return {
-    type: "EMPTY_PASSWORD_ERROR",
-    error: "Empty Password"
+    type: "EMPTY_PASSWORD_ERROR"
   }
 }
 
@@ -37,6 +35,52 @@ export var clearErrorMsg = () => {
 }
 
 
+export var setAuthenticated = (flag) => {
+  return {
+    type: "SET_AUTH_USER",
+    flag
+  }
+}
+
+
+export var startSignIn = (credentials) => {
+  return (dispatch, getState) => {
+
+    dispatch(signingInUser(true));
+
+    if (process.env.NODE_ENV === 'production') {
+      var url = 'https://fcc-booktrading-club.herokuapp.com/signin_user';
+    } else {
+      var url = 'http://localhost:3050/signin_user';
+    }
+
+    axios.post( url, JSON.stringify(credentials)).then((res)=>{
+      if (res.data.token) {
+        localStorage.setItem('email', credentials.email);
+        localStorage.setItem('token', res.data.token);
+        axios.get(`http://localhost:3050/get_user?email=${credentials.email}`, {headers: {authorization: localStorage.getItem("token")}}).then((res) => {
+          console.log(res);
+          dispatch(setUserDetails(res.data));
+          dispatch(signingInUser(false));
+          dispatch(push('/'));
+        });
+      }
+    }).catch((e) => {
+      dispatch(signingInUser(false));
+      if (e.response) {
+        console.log(e);
+        if (e.response.data === "Unauthorized") {
+          dispatch(invalidEmailorPasswordError("Invalid Email or Password"));
+        }
+      } else {
+        dispatch(invalidEmailorPasswordError("Server unreachable :("));
+      }
+    });
+  }
+}
+
+
+// SignUp Actions
 
 export var emailErrorMsg = (flag) => {
   return {
@@ -94,82 +138,8 @@ export var passwordConfirmedInvalid = (flag) => {
   }
 }
 
-
-
-export var setAuthUser = (flag)=>{
-  return {
-    type: "SET_AUTH_USER",
-    flag
-  }
-}
-
-export var setUnauthUser = (flag)=>{
-  return {
-    type: "SET_UNAUTH_USER",
-    flag
-  }
-}
-
-export var setUserName = (email)=>{
-  return {
-    type: "SET_USER_NAME",
-    email
-  }
-}
-
-export var removeUserName = ()=>{
-  return {
-    type: "REMOVE_USER_NAME"
-  }
-}
-
-export var startSignIn = (credentials) => {
-  return (dispatch, getState) => {
-    //call server and update auth state
-      //error or token
-    dispatch(signingInUser(true));
-    console.log(JSON.stringify(credentials));
-
-    if (process.env.NODE_ENV === 'production') {
-      var url = 'https://fcc-booktrading-club.herokuapp.com/signin_user';
-    } else {
-      var url = 'http://localhost:3050/signin_user';
-    }
-
-    axios.post( url, JSON.stringify(credentials)).then((res)=>{
-      if (res.data.token) {
-        // set state to authorised
-        dispatch(setAuthUser(true));
-        dispatch(setUserName(credentials.email));
-        // dispatch(fetchUserDetails(auth.userName));
-        // save to local storage
-        localStorage.setItem('token', res.data.token);
-        dispatch(push('/'));
-
-        dispatch(signingInUser(false));
-      }
-    }).catch((e) => {
-      dispatch(signingInUser(false));
-
-      if (e.response) {
-        console.log(e);
-        if (e.response.data === "Unauthorized") {
-          dispatch(invalidEmailorPasswordError("Invalid Email or Password"));
-        }
-      } else {
-        dispatch(invalidEmailorPasswordError("Server unreachable :("));
-      }
-
-
-    });
-  }
-}
-
-
 export var startSignUp = (credentials) => {
   return (dispatch, getState) => {
-    //call server and update auth state
-      //error or token
     dispatch(signingInUser(true));
     console.log(JSON.stringify(credentials));
     if (process.env.NODE_ENV === 'production') {
@@ -180,11 +150,14 @@ export var startSignUp = (credentials) => {
     axios.post(url, JSON.stringify(credentials)).then((res)=>{
 
       if (res.data.token) {
-        // set state to authorised
-        dispatch(setAuthUser(true));
+        localStorage.setItem('email', credentials.email);
         localStorage.setItem('token', res.data.token);
-        dispatch(push('/'));
-        dispatch(signingInUser(false));
+        axios.get(`http://localhost:3050/get_user?email=${credentials.email}`, {headers: {authorization: localStorage.getItem("token")}}).then((res) => {
+          console.log(res);
+          dispatch(setUserDetails(res.data));
+          dispatch(signingInUser(false));
+          dispatch(push('/'));
+        });
       } else if (res.data.error === "Email is in use") {
         console.log("Email is in use");
         dispatch(signingInUser(false));
@@ -230,6 +203,13 @@ export var removeUserDetails = () => {
   }
 }
 
+export var fetchingUserDetails = (flag) => {
+  return {
+    type: "FETCHING_USER_DETAILS",
+    flag
+  }
+}
+
 export var fetchUserDetails = (email) => {
   return (dispatch, getState) => {
 
@@ -239,9 +219,10 @@ export var fetchUserDetails = (email) => {
       var url = 'http://localhost:3050/get_user';
     }
 
-    axios.get(`${url}?email=${email}`, {}).then((res) => {
+    axios.get(`${url}?email=${email}`, {headers: {authorization: localStorage.getItem("token")}}).then((res) => {
       console.log(res);
       dispatch(setUserDetails(res.data));
+      dispatch(fetchingUserDetails(false));
     });
   }
 }

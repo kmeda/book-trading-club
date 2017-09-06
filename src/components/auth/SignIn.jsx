@@ -1,6 +1,7 @@
 import React,{Component} from 'react';
 import {BrowserRouter as Router, Route, Switch, Link, withRouter} from 'react-router-dom';
 import * as Redux from "react-redux";
+import { push } from 'react-router-redux';
 var actions = require('../../actions/actions.jsx');
 
 class SignIn extends Component {
@@ -9,22 +10,24 @@ class SignIn extends Component {
   }
 
   componentWillUnmount(){
-    var {dispatch} = this.props;
-    dispatch(actions.clearErrorMsg());
+    var {dispatch, auth} = this.props;
+    if (auth.signIn || auth.signUp) {
+      dispatch(actions.clearErrorMsg());
+    }
   }
 
   handleSignIn(e){
     e.preventDefault();
-    var {dispatch} = this.props;
+    var {dispatch, auth} = this.props;
 
-    dispatch(actions.clearErrorMsg());
+    if (auth.signIn || auth.signUp) {
+      dispatch(actions.clearErrorMsg());
+    }
 
     let email = this.refs.username.value;
     let password = this.refs.password.value;
 
     let credentials = {email, password};
-
-
 
     if (email === '' || password === '') {
       if (email === '') {
@@ -36,15 +39,12 @@ class SignIn extends Component {
       return;
     }
 
-    //dispatch async action with credentials
-      dispatch(actions.startSignIn(credentials));
-
+    dispatch(actions.startSignIn(credentials));
   }
 
-  handleChange(e){
-    //dispatch action to update auth.username
+  handleInputChange(e){
     var {dispatch, auth} = this.props;
-    if (!(auth.signIn === '')) {
+    if (auth.signIn) {
       dispatch(actions.clearErrorMsg());
     }
   }
@@ -52,6 +52,9 @@ class SignIn extends Component {
 
 
   render(){
+    if (this.props.auth.fetchingUserDetails) {
+      return <div>Loading...</div>
+    }
 
     return (
       <div>
@@ -69,7 +72,7 @@ class SignIn extends Component {
 
                   </div>
                   <input placeholder="Email" ref="username"
-                         onChange={this.handleChange.bind(this)} />
+                         onChange={this.handleInputChange.bind(this)} />
                 </div>
 
                 <br/>

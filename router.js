@@ -4,7 +4,7 @@ const updateUser = require("./controllers/updateUser");
 const passport = require('passport');
 const passportService = require('./services/passport');
 
-const requireLogin = passport.authenticate('jwt', {session: false});
+const requireAuth = passport.authenticate('jwt', {session: false});
 const requireSignin = passport.authenticate('local', {session: false});
 
 module.exports = function(app) {

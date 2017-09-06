@@ -41,11 +41,9 @@ const store = Redux.createStore(
   )
 )
 
-
 if (localStorage.getItem("token")) {
-  store.dispatch(actions.setAuthUser(true));
+  store.dispatch(actions.setAuthenticated(true));
 }
-
 
 ReactDOM.render(
     <Provider store={store}>
