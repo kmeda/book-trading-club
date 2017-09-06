@@ -12,6 +12,14 @@ module.exports = function(app) {
     res.sendFile(path.join(__dirname, 'dist/index.html'));
   });
 
+  app.get('/signin', function(req, res, next){
+    res.redirect('https://fcc-booktrading-club.herokuapp.com');
+  });
+
+  app.get('/signup', function(req, res, next){
+    res.redirect('https://fcc-booktrading-club.herokuapp.com');
+  })
+
   app.post('/signin_user', requireSignin, Authentication.signin);
   app.post('/signup_user', Authentication.signup);
 
