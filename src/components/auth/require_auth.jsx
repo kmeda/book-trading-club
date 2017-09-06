@@ -7,9 +7,11 @@ export default function(ComposedComponent) {
 
     componentWillMount() {
       var {dispatch} = this.props;
+      
       if (!this.props.auth.authenticated) {
         dispatch(push('/signin'));
       }
+
     }
 
     componentWillUpdate(nextProps) {

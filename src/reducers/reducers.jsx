@@ -28,7 +28,6 @@ export var authReducer = (state={signIn: '', signUp: ''}, action) => {
       };
     case "CLEAR_ERROR_MSG":
       return {
-        ...state,
         signIn: '',
         signUp: ''
       }
@@ -93,22 +92,18 @@ export var authReducer = (state={signIn: '', signUp: ''}, action) => {
         ...state,
         authenticated: action.flag
       }
-    
+
    case "SET_USER_DETAILS":
       return {
         ...state,
         user: action.payload
       }
-    case "REMOVE_USER_DETAILS":
-      return {
-        ...state,
-        user: null
-      }
-    case "FETCHING_USER_DETAILS":
-      return {
-        ...state,
-        fetchingUserDetails: action.flag
-      }
+   case "NUKE_AUTH_DATA":
+     return {
+       signIn: '',
+       signUp: ''
+     };
+
     default:
       return state;
   }

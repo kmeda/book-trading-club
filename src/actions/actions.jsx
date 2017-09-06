@@ -50,6 +50,11 @@ export var setAuthenticated = (flag) => {
   }
 }
 
+export var nukeAuthData = () => {
+  return {
+    type: "NUKE_AUTH_DATA"
+  }
+}
 
 export var startSignIn = (credentials) => {
   return (dispatch, getState) => {
@@ -63,6 +68,7 @@ export var startSignIn = (credentials) => {
         localStorage.setItem('token', res.data.token);
         axios.get(`${base_url}/get_user?email=${credentials.email}`, {headers: {authorization: localStorage.getItem("token")}}).then((res) => {
           console.log(res);
+          dispatch(setAuthenticated(true));
           dispatch(setUserDetails(res.data));
           dispatch(signingInUser(false));
           dispatch(push('/'));
@@ -196,18 +202,7 @@ export var setUserDetails = (payload) => {
   }
 }
 
-export var removeUserDetails = () => {
-  return {
-    type: "REMOVE_USER_DETAILS"
-  }
-}
 
-export var fetchingUserDetails = (flag) => {
-  return {
-    type: "FETCHING_USER_DETAILS",
-    flag
-  }
-}
 
 export var fetchUserDetails = (email) => {
   return (dispatch, getState) => {
@@ -215,7 +210,6 @@ export var fetchUserDetails = (email) => {
     axios.get(`${base_url}/get_user?email=${email}`, {headers: {authorization: localStorage.getItem("token")}}).then((res) => {
       console.log(res);
       dispatch(setUserDetails(res.data));
-      dispatch(fetchingUserDetails(false));
     });
   }
 }

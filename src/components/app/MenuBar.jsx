@@ -53,7 +53,7 @@ class MenuBar extends Component {
     var {dispatch} = this.props;
     localStorage.removeItem('token');
     localStorage.removeItem('email');
-    dispatch(actions.removeUserDetails());
+    dispatch(actions.nukeAuthData());
     dispatch(push('/signin'));
   }
 
