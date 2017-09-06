@@ -1,6 +1,14 @@
 import axios from 'axios';
 import { push } from 'react-router-redux';
 
+if (process.env.NODE_ENV === 'production') {
+  var base_url = 'https://fcc-booktrading-club.herokuapp.com';
+} else {
+  var base_url = 'http://localhost:3050';
+}
+
+
+
 // SignIn Actions
 export var signingInUser = (flag) => {
   return {
@@ -48,17 +56,12 @@ export var startSignIn = (credentials) => {
 
     dispatch(signingInUser(true));
 
-    if (process.env.NODE_ENV === 'production') {
-      var url = 'https://fcc-booktrading-club.herokuapp.com/signin_user';
-    } else {
-      var url = 'http://localhost:3050/signin_user';
-    }
 
-    axios.post( url, JSON.stringify(credentials)).then((res)=>{
+    axios.post(`${base_url}/signin_user`, JSON.stringify(credentials)).then((res)=>{
       if (res.data.token) {
         localStorage.setItem('email', credentials.email);
         localStorage.setItem('token', res.data.token);
-        axios.get(`http://localhost:3050/get_user?email=${credentials.email}`, {headers: {authorization: localStorage.getItem("token")}}).then((res) => {
+        axios.get(`${base_url}/get_user?email=${credentials.email}`, {headers: {authorization: localStorage.getItem("token")}}).then((res) => {
           console.log(res);
           dispatch(setUserDetails(res.data));
           dispatch(signingInUser(false));
@@ -142,17 +145,13 @@ export var startSignUp = (credentials) => {
   return (dispatch, getState) => {
     dispatch(signingInUser(true));
     console.log(JSON.stringify(credentials));
-    if (process.env.NODE_ENV === 'production') {
-      var url = 'https://fcc-booktrading-club.herokuapp.com/signup_user';
-    } else {
-      var url = 'http://localhost:3050/signup_user';
-    }
-    axios.post(url, JSON.stringify(credentials)).then((res)=>{
+
+    axios.post(`${base_url}/signup_user`, JSON.stringify(credentials)).then((res)=>{
 
       if (res.data.token) {
         localStorage.setItem('email', credentials.email);
         localStorage.setItem('token', res.data.token);
-        axios.get(`http://localhost:3050/get_user?email=${credentials.email}`, {headers: {authorization: localStorage.getItem("token")}}).then((res) => {
+        axios.get(`${base_url}/get_user?email=${credentials.email}`, {headers: {authorization: localStorage.getItem("token")}}).then((res) => {
           console.log(res);
           dispatch(setUserDetails(res.data));
           dispatch(signingInUser(false));
@@ -213,13 +212,7 @@ export var fetchingUserDetails = (flag) => {
 export var fetchUserDetails = (email) => {
   return (dispatch, getState) => {
 
-    if (process.env.NODE_ENV === 'production') {
-      var url = 'https://fcc-booktrading-club.herokuapp.com/get_user';
-    } else {
-      var url = 'http://localhost:3050/get_user';
-    }
-
-    axios.get(`${url}?email=${email}`, {headers: {authorization: localStorage.getItem("token")}}).then((res) => {
+    axios.get(`${base_url}/get_user?email=${email}`, {headers: {authorization: localStorage.getItem("token")}}).then((res) => {
       console.log(res);
       dispatch(setUserDetails(res.data));
       dispatch(fetchingUserDetails(false));
@@ -233,11 +226,7 @@ export var saveUserSettings = (settings) => {
     //set save progress
     dispatch(onSaveSettings(true));
 
-    if (process.env.NODE_ENV === 'production') {
-      var url = 'https://fcc-booktrading-club.herokuapp.com/update_user';
-    } else {
-      var url = 'http://localhost:3050/update_user';
-    }
+
     var headers = {
            "Content-Type": "application/json",
            'Accept' : 'application/json',
@@ -245,7 +234,7 @@ export var saveUserSettings = (settings) => {
        }
 
 
-    axios.post(url, JSON.stringify(settings), headers).then((res)=>{
+    axios.post(`${base_url}/update_user`, JSON.stringify(settings), headers).then((res)=>{
       console.log(res);
         dispatch(setUserDetails(settings));
         dispatch(onSaveSettings(false));
