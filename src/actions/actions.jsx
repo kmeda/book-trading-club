@@ -66,13 +66,9 @@ export var startSignIn = (credentials) => {
       if (res.data.token) {
         localStorage.setItem('email', credentials.email);
         localStorage.setItem('token', res.data.token);
-        axios.get(`${base_url}/get_user?email=${credentials.email}`, {headers: {authorization: localStorage.getItem("token")}}).then((res) => {
-          console.log(res);
-          dispatch(setAuthenticated(true));
-          dispatch(setUserDetails(res.data));
-          dispatch(signingInUser(false));
-          dispatch(push('/'));
-        });
+        dispatch(setAuthenticated(true));
+        dispatch(signingInUser(false));
+        dispatch(push('/'));
       }
     }).catch((e) => {
       dispatch(signingInUser(false));
@@ -150,19 +146,14 @@ export var passwordConfirmedInvalid = (flag) => {
 export var startSignUp = (credentials) => {
   return (dispatch, getState) => {
     dispatch(signingInUser(true));
-    console.log(JSON.stringify(credentials));
-
     axios.post(`${base_url}/signup_user`, JSON.stringify(credentials)).then((res)=>{
 
       if (res.data.token) {
         localStorage.setItem('email', credentials.email);
         localStorage.setItem('token', res.data.token);
-        axios.get(`${base_url}/get_user?email=${credentials.email}`, {headers: {authorization: localStorage.getItem("token")}}).then((res) => {
-          console.log(res);
-          dispatch(setUserDetails(res.data));
-          dispatch(signingInUser(false));
-          dispatch(push('/'));
-        });
+        dispatch(setAuthenticated(true));
+        dispatch(signingInUser(false));
+        dispatch(push('/'));
       } else if (res.data.error === "Email is in use") {
         console.log("Email is in use");
         dispatch(signingInUser(false));
@@ -208,7 +199,6 @@ export var fetchUserDetails = (email) => {
   return (dispatch, getState) => {
 
     axios.get(`${base_url}/get_user?email=${email}`, {headers: {authorization: localStorage.getItem("token")}}).then((res) => {
-      console.log(res);
       dispatch(setUserDetails(res.data));
     });
   }
