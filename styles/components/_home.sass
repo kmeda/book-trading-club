@@ -52,7 +52,7 @@
     height: 25px
     margin-top: 4px
     border-radius: 3px
-    background-color: rgba(0,0,0,0.6)
+    background-color: rgba(0,0,0,0.7)
     box-shadow: inset 0 0 13px rgba(255,255,255,0.5)
     color: #f4f4f4
     position: relative
@@ -97,22 +97,29 @@
         position: absolute
         width: 200px
         height: 150px
-        background-color: white
+        border-radius: 5px
+        background-color:  rgba(255,255,255,0.7)
         box-shadow: 0 0 10px rgba(0,0,0,0.6)
         transform: translate(-60px, 90px)
         cursor: default
         animation: settingsBox .2s linear
+        z-index: 999
         .bc-settings-form
           display: flex
           flex-direction: column
-          justify-content: center
+          // justify-content: space-around
           align-items: center
           color: black
+          div
+            transform: translateY(8px)
+          button
+            transform: translateY(-5px)
           .bc-settings-input
-            width: 80%
+            width: 90%
             height: 20px
             padding-left: 5px
-
+            // border-radius: 3px
+            // border: none
     .bc-notification
       width: 32px
       height: 100%
@@ -141,12 +148,61 @@
         width: 100%
         height: 100%
         transition: all .3s ease-in-out
+        z-index: 998
         &:hover
           transform: translateX(6px)
 
   .bc-books-container
     width: 1200px
     height: auto
+    // background-color: rgba(255,255,255,0.5)
+    .bc-books-requests
+      display: none
+      overflow: auto
+      white-space: nowrap
+      width: 100%
+      height: 75px
+      margin-top: 20px
+
+      .bc-books-request
+        display: inline-block
+        width: 200px
+        height: 80%
+        background-color: rgba(0,0,0,0.5)
+        margin-right: 5px
+    .bc-books-add
+      position: relative
+      margin-top: 20px
+      width: 100%
+      height: auto
+      .bc-books-searchbar
+        padding-left: 5px
+        width: 300px
+        height: 25px
+        border-radius: 3px
+        border: none
+        background-color: rgba(0,0,0,0.7)
+        box-shadow: 0 3px 10px rgba(0,0,0,0.7)
+        color: white
+        outline: none
+      .bc-books-list
+        display: flex
+        flex-wrap: wrap
+        // justify-content: center
+        // align-items: center
+        width: 100%
+        height: auto
+        // background-color: rgba(0,0,0,0.3)
+        margin-top: 30px
+        .bc-each-book
+          width: 200px
+          height: 275px
+          border-radius: 3px
+          background-color: rgba(0,0,0,0.3)
+          box-shadow: 0 4px 10px rgba(0,0,0,0.7)
+          margin-left: 26px
+          margin-right: 10px
+          margin-bottom: 20px
 
 a
   text-decoration: none

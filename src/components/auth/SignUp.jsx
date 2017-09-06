@@ -1,6 +1,7 @@
 import React,{Component} from 'react';
 import {BrowserRouter as Router, Route, Switch, Link, withRouter} from 'react-router-dom';
 import * as Redux from "react-redux";
+import _ from 'lodash';
 var actions = require('../../actions/actions.jsx');
 
 
@@ -21,7 +22,7 @@ class SignUp extends Component {
     e.preventDefault();
     var {dispatch, auth} = this.props;
 
-    var email = this.refs.userEmail.value;
+    var email = _.trim(this.refs.userEmail.value);
     var password = this.refs.password.value;
     var passwordConfirm = this.refs.passwordConfirm.value;
     let credentials = {email, password};

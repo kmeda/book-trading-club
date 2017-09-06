@@ -8,6 +8,7 @@ var actions = require('../../actions/actions.jsx');
 class MenuBar extends Component {
   constructor(props){
     super(props);
+
   }
 
   componentWillMount(){
@@ -28,10 +29,12 @@ class MenuBar extends Component {
     }
   }
 
-  updateSettings(){
+  showSettings(){
     var {dispatch, settings} = this.props;
     settings.showSettings ? dispatch(actions.showSettings(false)) : dispatch(actions.showSettings(true));
   }
+
+
 
   saveSettings(e){
     e.preventDefault();
@@ -56,6 +59,7 @@ class MenuBar extends Component {
     dispatch(actions.nukeAuthData());
     dispatch(push('/signin'));
   }
+
 
   render(){
     if (!this.props.auth.user) {
@@ -98,7 +102,7 @@ class MenuBar extends Component {
           </div>
 
           <div className={this.props.settings.showSettings ? "bc-settings bc-settings-clicked" : "bc-settings" }>
-            <i className="fa fa-cog" aria-hidden="true" onClick={this.updateSettings.bind(this)}>
+            <i className="fa fa-cog" aria-hidden="true" onClick={this.showSettings.bind(this)}>
               {this.props.auth.user? null : <div className="bc-settings-alert"><i className="fa fa-exclamation" aria-hidden="true"></i></div>}
 
             </i>

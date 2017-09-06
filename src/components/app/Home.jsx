@@ -1,5 +1,6 @@
 import React,{Component} from 'react';
 import MenuBar from './MenuBar.jsx';
+import * as Redux from "react-redux";
 
 class Home extends Component {
   constructor(props){
@@ -15,13 +16,45 @@ class Home extends Component {
         <div className="bc-color-strip">{ colorStrip }</div>
         <MenuBar/>
         <div className="bc-books-container">
-          <div>Approve Requests</div>
-          <div>Search Books</div>
-          <div>Add Books</div>
+
+          <div className="bc-books-requests">
+            <div className="bc-books-request"></div>
+            <div className="bc-books-request"></div>
+            <div className="bc-books-request"></div>
+            <div className="bc-books-request"></div>
+            <div className="bc-books-request"></div>
+            
+
+          </div>
+
+          <div className="bc-books-add">
+            <input className="bc-books-searchbar" type="text" placeholder="Search and add books"/>
+            <div className="bc-books-list">
+              <div className="bc-each-book"></div>
+              <div className="bc-each-book"></div>
+              <div className="bc-each-book"></div>
+              <div className="bc-each-book"></div>
+              <div className="bc-each-book"></div>
+              <div className="bc-each-book"></div>
+              <div className="bc-each-book"></div>
+              <div className="bc-each-book"></div>
+              <div className="bc-each-book"></div>
+              <div className="bc-each-book"></div>
+              <div className="bc-each-book"></div>
+              <div className="bc-each-book"></div>
+              <div className="bc-each-book"></div>
+            </div>
+          </div>
         </div>
       </div>
     )
   }
 }
 
-export default Home;
+export default Redux.connect(
+  (state) => {
+    return {
+      books: state.books
+    }
+  }
+)(Home);
