@@ -43,17 +43,8 @@ exports.fetchUser = function(req, res, next) {
     secretOrKey: secret
   };
 
-  // User.findById(jwtOptions.jwtFromRequest, function(err, user){
-  //     if (err) {console.log(err);}
-  //
-  //     if (user) {
-  //       console.log(user);
-  //       var userDetails = {firstName: user.firstName, lastName: user.lastName, location: user.location}
-  //       res.send(userDetails);
-  //     }
-  //   });
-
     const email = req.query.email;
+    console.log("Email request param", email);
     User.findOne({email: email}, function(err, user){
 
         if(err) {return next(err)};
