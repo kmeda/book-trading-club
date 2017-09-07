@@ -34,7 +34,15 @@ class MenuBar extends Component {
     settings.showSettings ? dispatch(actions.showSettings(false)) : dispatch(actions.showSettings(true));
   }
 
+  mouseEnterSettings(){
+    var {dispatch} = this.props;
+    dispatch(actions.showSettings(true));
+  }
 
+  mouseLeaveSettings(){
+    var {dispatch} = this.props;
+    dispatch(actions.showSettings(false));
+  }
 
   saveSettings(e){
     e.preventDefault();
@@ -89,8 +97,11 @@ class MenuBar extends Component {
     return (
       <div>
           <div className="bc-menu-bar">
+          <div className="bc-fcclogo"></div>
           <div className={this.props.myBooksActive + " bc-mybooks"}><Link to='/'>My Books</Link></div>
           <div className={this.props.allBooksActive + " bc-allbooks"}><Link to='/allbooks'>All Books</Link></div>
+
+          <div className="bc-books-search"><input className="bc-books-searchbar" type="text" placeholder="Search and add books"/><i className="bc-search-icon fa fa-search" aria-hidden="true"></i></div>
 
           <div className="bc-profile">
             {(Object.keys(this.props.auth.user)).length <= 0 ? null : this.props.auth.user.firstName + " " + this.props.auth.user.lastName}
@@ -101,7 +112,8 @@ class MenuBar extends Component {
             </i>
           </div>
 
-          <div className={this.props.settings.showSettings ? "bc-settings bc-settings-clicked" : "bc-settings" }>
+          <div className={this.props.settings.showSettings ? "bc-settings bc-settings-clicked" : "bc-settings" }
+            >
             <i className="fa fa-cog" aria-hidden="true" onClick={this.showSettings.bind(this)}>
               {(Object.keys(this.props.auth.user)).length <= 0 ? <div className="bc-settings-alert"><i className="fa fa-exclamation" aria-hidden="true"></i></div> : null }
 

@@ -33,24 +33,19 @@ class Home extends Component {
             <div className="bc-books-request"></div>
             <div className="bc-books-request"></div>
             <div className="bc-books-request"></div>
-
-
           </div>
 
           <div className="bc-books-add">
-            <input className="bc-books-searchbar" type="text" placeholder="Search and add books"/>
             <div className="bc-books-list">
-              <div className="bc-each-book"></div>
-              <div className="bc-each-book"></div>
-              <div className="bc-each-book"></div>
-              <div className="bc-each-book"></div>
-              <div className="bc-each-book"></div>
-              <div className="bc-each-book"></div>
-              <div className="bc-each-book"></div>
-              <div className="bc-each-book"></div>
-              <div className="bc-each-book"></div>
-              <div className="bc-each-book"></div>
-
+              <div className="bc-each-book-container"><div className="bc-each-book"></div></div>
+              <div className="bc-each-book-container"><div className="bc-each-book"></div></div>
+              <div className="bc-each-book-container"><div className="bc-each-book"></div></div>
+              <div className="bc-each-book-container"><div className="bc-each-book"></div></div>
+              <div className="bc-each-book-container"><div className="bc-each-book"></div></div>
+              <div className="bc-each-book-container"><div className="bc-each-book"></div></div>
+              <div className="bc-each-book-container"><div className="bc-each-book"></div></div>
+              <div className="bc-each-book-container"><div className="bc-each-book"></div></div>
+              <div className="bc-each-book-container"><div className="bc-each-book"></div></div>
             </div>
           </div>
         </div>
