@@ -15,7 +15,6 @@ try {
 }
 
 console.log("Current environment - "+process.env.NODE_ENV);
-console.log("My Secret - "+process.env.SECRET);
 
 const VENDOR_LIBS = [
   'react', 'redux', 'react-redux', 'react-dom',

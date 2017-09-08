@@ -169,8 +169,6 @@ export var startSignUp = (credentials) => {
 }
 
 
-// Books Reducer Actions
-
 // Settings Reducer
 export var showSettings = (flag) => {
   return {
@@ -224,5 +222,21 @@ export var saveUserSettings = (settings) => {
         dispatch(saveSettings(false));
         dispatch(showSettings(false));
       });
+  }
+}
+
+
+// Books Reducer Actions
+
+export var setSearchResults = (payload)=>{
+  return {
+    type: "SET_SEARCH_RESULTS",
+    payload
+  }
+}
+
+export var clearSearchResults = ()=>{
+  return {
+    type: "SET_SEARCH_RESULTS"
   }
 }

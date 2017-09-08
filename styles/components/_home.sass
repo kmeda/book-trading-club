@@ -67,7 +67,7 @@
       height: 100%
       position: relative
       .bc-books-searchbar
-        padding-left: 5px
+        padding-left: 25px
         width: 300px
         height: 23px
         border-radius: 3px
@@ -75,11 +75,41 @@
         background-color: rgba(0,0,0,0.0)
         color: white
         outline: none
-        transform: translateX(-10px)
+        transform: translateX(-25px)
       .bc-search-icon
         position: absolute
         color: #dddddd
-        transform: translate(-25px, -21px)
+        transform: translate(-20px, -21px)
+      .bc-search-list-wrapper
+        position: absolute
+        width: 1200px
+        height: 95vh
+        z-index: 1001
+        // background-color: rgba(0,0,0,0.6)
+        transform: translateX(-494px)
+        color: black
+        .bc-search-list
+          width: 200px
+          height: 600px
+          background-color: white
+          box-shadow: 0 15px 20px rgba(0,0,0,0.8)
+          transform: translate(460px, 1px)
+          overflow: auto
+          .bc-book-details
+            width: 100%
+            height: 200px
+            margin-bottom: 5px
+            .bc-book-image
+              width: 100%
+              height: 100%
+              background-size: contain
+            .bc-book-details-all
+              // width: 60%
+              // height: 100%
+              .bc-book-title
+
+
+
     .bc-allbooks, .bc-mybooks, .bc-signout, .bc-settings, .bc-signout, .bc-profile, .bc-notification
       display: flex
       justify-content: center
@@ -89,11 +119,14 @@
       // text-shadow: 0 1px 3px
     .bc-mybooks-active, .bc-allbooks-active
       background-color: rgba(0,0,0,0.6)
+      text-shadow: 1px 1px 3px #FFFFFF
+      color: white !important
     .bc-allbooks, .bc-mybooks
       width: 90px
       height: 100%
       cursor: pointer
       transform: translateX(-70px)
+      color: #d0d0d0
       &:hover
         background-color: rgba(0,0,0,0.6)
 
@@ -122,33 +155,33 @@
         font-size: 0.8em
         color: #0fdfec
         box-shadow: 0 0 10px #0fdfec
-      .bc-settings-box
-        position: absolute
-        width: 200px
-        height: 150px
-        border-radius: 5px
-        background-color:  rgba(255,255,255,0.7)
-        box-shadow: 0 0 10px rgba(0,0,0,0.6)
-        transform: translate(-60px, 90px)
-        cursor: default
-        animation: settingsBox .2s linear
-        z-index: 999
-        .bc-settings-form
-          display: flex
-          flex-direction: column
-          // justify-content: space-around
-          align-items: center
-          color: black
-          div
-            transform: translateY(8px)
-          button
-            transform: translateY(-5px)
-          .bc-settings-input
-            width: 90%
-            height: 20px
-            padding-left: 5px
-            // border-radius: 3px
-            // border: none
+    .bc-settings-box
+      position: absolute
+      width: 200px
+      height: 150px
+      border-radius: 5px
+      background-color:  rgba(255,255,255,0.8)
+      box-shadow: 0 0 10px rgba(0,0,0,0.6)
+      transform: translate(-5px, 27px)
+      cursor: default
+      animation: settingsBox .2s linear
+      z-index: 999
+      .bc-settings-form
+        display: flex
+        flex-direction: column
+        // justify-content: space-around
+        align-items: center
+        color: black
+        div
+          transform: translateY(8px)
+        button
+          transform: translateY(-5px)
+        .bc-settings-input
+          width: 90%
+          height: 20px
+          padding-left: 5px
+          // border-radius: 3px
+          // border: none
     .bc-notification
       width: 32px
       height: 100%

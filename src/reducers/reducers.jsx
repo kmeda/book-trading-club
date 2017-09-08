@@ -116,7 +116,16 @@ export var booksReducer = (state={}, action) => {
         ...state,
         requestsPending: action.payload
       }
-
+    case "SET_SEARCH_RESULTS":
+      return {
+        ...state,
+        searchResults: action.payload
+      }
+    case "CLEAR_SEARCH_RESULTS":
+      return {
+        ...state,
+        searchResults: null
+      }
     default:
     return state;
 
