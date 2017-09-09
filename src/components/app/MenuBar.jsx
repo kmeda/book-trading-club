@@ -31,9 +31,9 @@ class MenuBar extends Component {
       },(e)=>console.log(e))
     }
 
-  addBooktoDB(book){
+  addBooktoDB(book, e){
     var {dispatch, books} = this.props;
-
+    e.preventDefault();
     _.find(books.myBooks,  {id: book.id}) ? alert("Book already added") : dispatch(actions.addBooktoDatabase(book));
 
   }
@@ -140,7 +140,8 @@ class MenuBar extends Component {
                       this.props.books.searchResults.map((each, index)=> {
 
                         return <div key={index} className="bc-book-details"><img src={each.volumeInfo.imageLinks ? each.volumeInfo.imageLinks.thumbnail : null} className="bc-book-image" alt={each.volumeInfo.title}></img>
-                        <div className="bc-add-book" onClick={this.addBooktoDB.bind(this, each)}><i className="fa fa-plus" aria-hidden="true"></i></div></div>
+
+                        <button className="bc-add-book" onClick={this.addBooktoDB.bind(this, each)}><i className="fa fa-plus" aria-hidden="true"></i></button></div>
                   })
                 }
                 </div>

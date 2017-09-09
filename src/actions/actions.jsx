@@ -241,10 +241,19 @@ export var clearSearchResults = ()=>{
   }
 }
 
+export var addingBook = (flag)=>{
+  return {
+    type: "ADDING_BOOK",
+    flag
+  }
+}
+
 export var addBooktoDatabase = (book) => {
   return (dispatch, getState) => {
     var email = localStorage.getItem("email");
-    axios.post('http://localhost:3050/add_book', {email, book}).then((res)=>{
+    //disable add button here
+    dispatch(addingBook(true));
+    axios.post('${base_url}/add_book', {email, book}).then((res)=>{
       dispatch(fetchMyBooks());
     });
   }
@@ -260,10 +269,12 @@ export var setMyBooks = (payload)=> {
 export var fetchMyBooks = ()=>{
   return (dispatch, getState) => {
     var email = localStorage.getItem("email");
-    axios.get(`http://localhost:3050/get_books?email=${email}`).then((res)=>{
+    axios.get(`${base_url}/get_books?email=${email}`).then((res)=>{
       console.log(res.data[0].books);
       var my_books = res.data[0].books;
       dispatch(setMyBooks(my_books));
+      //enable button back
+      dispatch(addingBook(false));
     }).catch((err) => {console.log(err)});
   }
 }
