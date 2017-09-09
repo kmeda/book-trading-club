@@ -45,10 +45,13 @@ class Home extends Component {
             <div className="bc-books-list">
               {
                 this.props.books.myBooks.length > 0 ? this.props.books.myBooks.map((book) =>{
+                  var image_url = book.volumeInfo.imageLinks.thumbnail;
+                  image_url = "https://"+image_url.slice(7);
+                  console.log(image_url);
                   return (
                     <div key={book.id} className="bc-each-book-container">
                       <div className="bc-each-book">
-                        <img className="bc-each-book-img" src={book.volumeInfo.imageLinks.thumbnail}></img>
+                        <img className="bc-each-book-img" src={image_url}></img>
                       </div>
                     </div>)
                 }) : null

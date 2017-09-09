@@ -109,7 +109,7 @@ export var authReducer = (state={signIn: '', signUp: ''}, action) => {
   }
 }
 
-export var booksReducer = (state={myBooks:[], allBooks: []}, action) => {
+export var booksReducer = (state={myBooks:[], allBooks: [], searchResults:[]}, action) => {
   switch (action.type) {
     case "REQUESTS_PENDING":
       return {
@@ -124,7 +124,7 @@ export var booksReducer = (state={myBooks:[], allBooks: []}, action) => {
     case "CLEAR_SEARCH_RESULTS":
       return {
         ...state,
-        searchResults: null
+        searchResults: []
       }
     case "SET_MY_BOOKS":
       return {

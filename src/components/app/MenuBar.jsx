@@ -133,15 +133,16 @@ class MenuBar extends Component {
             <input className="bc-books-searchbar" type="text" placeholder="Search and add books" ref="searchTerm"
                    onChange={_.debounce(this.searchBooks.bind(this), 300)}/>
             <i className="bc-search-icon fa fa-search" aria-hidden="true"></i>
-            { this.props.books.searchResults ?
+            { this.props.books.searchResults.length > 0 ?
                 <div className="bc-search-list-wrapper">
                   <div className="bc-search-list">
                     {
                       this.props.books.searchResults.map((each, index)=> {
+                        var image_url = each.volumeInfo.imageLinks ? "https://"+each.volumeInfo.imageLinks.thumbnail.slice(7) : null;
+                        return <div key={index} className="bc-book-details"><img src={ image_url} className="bc-book-image" alt={each.volumeInfo.title}></img>
 
-                        return <div key={index} className="bc-book-details"><img src={each.volumeInfo.imageLinks ? each.volumeInfo.imageLinks.thumbnail : null} className="bc-book-image" alt={each.volumeInfo.title}></img>
-
-                        <button className="bc-add-book" onClick={this.addBooktoDB.bind(this, each)}><i className="fa fa-plus" aria-hidden="true"></i></button></div>
+                        <button className="bc-add-book" onClick={this.addBooktoDB.bind(this, each)}><i className="fa fa-plus" aria-hidden="true"></i></button>
+                      </div>
                   })
                 }
                 </div>

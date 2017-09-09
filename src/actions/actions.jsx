@@ -237,7 +237,7 @@ export var setSearchResults = (payload)=>{
 
 export var clearSearchResults = ()=>{
   return {
-    type: "SET_SEARCH_RESULTS"
+    type: "CLEAR_SEARCH_RESULTS"
   }
 }
 
