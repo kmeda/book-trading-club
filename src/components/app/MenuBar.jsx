@@ -17,7 +17,7 @@ class MenuBar extends Component {
     var {dispatch} = this.props;
     var term = this.refs.searchTerm.value;
 
-      var url = `https://www.googleapis.com/books/v1/volumes?q=${term}&startIndex=0&maxResults=20&printType=all&orderBy=relevance&langRestrict=en&API_KEY=AIzaSyA_NAVmh4jsC-6ag1l7nYycm_kG2zJ9cg0`;
+      var url = `https://www.googleapis.com/books/v1/volumes?q=${term}&startIndex=0&maxResults=5&printType=all&orderBy=relevance&langRestrict=en&API_KEY=AIzaSyA_NAVmh4jsC-6ag1l7nYycm_kG2zJ9cg0`;
 
       if (_.trim(term) === '' || term.length < 1) {
         dispatch(actions.clearSearchResults());
