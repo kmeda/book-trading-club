@@ -139,7 +139,8 @@ export var booksReducer = (state={myBooks:[], allBooks: [], searchResults:[]}, a
     case "NUKE_BOOKS_STATE":
       return {
         myBooks: [],
-        allBooks: []
+        allBooks: [],
+        searchResults:[]
       }
     default:
     return state;
