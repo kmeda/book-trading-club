@@ -25,4 +25,7 @@ module.exports = function(app) {
 
   app.post('/update_user', updateUser.update);
   app.get('/get_user', updateUser.fetchUser);
+
+  app.post('/add_book', updateUser.addBook);
+  app.get('/get_books', updateUser.getBooks);
 }

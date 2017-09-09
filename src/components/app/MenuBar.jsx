@@ -14,39 +14,36 @@ class MenuBar extends Component {
   }
 
   searchBooks(){
-    // _.trim(e.target.value);
-    // e.persist();
     var {dispatch} = this.props;
     var term = this.refs.searchTerm.value;
 
       var url = `https://www.googleapis.com/books/v1/volumes?q=${term}&startIndex=0&maxResults=20&printType=all&orderBy=relevance&langRestrict=en&API_KEY=AIzaSyA_NAVmh4jsC-6ag1l7nYycm_kG2zJ9cg0`;
-      console.log(url);
 
       if (_.trim(term) === '' || term.length < 1) {
         dispatch(actions.clearSearchResults());
         return;
       }
-
       axios.get(url).then((res)=>{
-        // console.log(res.data.items);
         var results = res.data.items.map((item)=>{
-          return item.volumeInfo;
+          return item;
         })
-        console.log(results);
         dispatch(actions.setSearchResults(results));
       },(e)=>console.log(e))
     }
 
+  addBooktoDB(book){
+    var {dispatch, books} = this.props;
+
+    _.find(books.myBooks,  {id: book.id}) ? alert("Book already added") : dispatch(actions.addBooktoDatabase(book));
+
+  }
 
   componentWillMount(){
-    //request user details from server and update state
     var {dispatch, auth} = this.props;
-
     if (!auth.user) {
       var email = localStorage.getItem("email");
       dispatch(actions.fetchUserDetails(email));
     }
-
   }
 
   componentDidMount(){
@@ -61,15 +58,6 @@ class MenuBar extends Component {
     settings.showSettings ? dispatch(actions.showSettings(false)) : dispatch(actions.showSettings(true));
   }
 
-  mouseEnterSettings(){
-    var {dispatch} = this.props;
-    dispatch(actions.showSettings(true));
-  }
-
-  mouseLeaveSettings(){
-    var {dispatch} = this.props;
-    dispatch(actions.showSettings(false));
-  }
 
   saveSettings(e){
     e.preventDefault();
@@ -92,6 +80,7 @@ class MenuBar extends Component {
     localStorage.removeItem('token');
     localStorage.removeItem('email');
     dispatch(actions.nukeAuthData());
+    dispatch(actions.nukeBooksState());
     dispatch(push('/signin'));
   }
 
@@ -149,12 +138,9 @@ class MenuBar extends Component {
                   <div className="bc-search-list">
                     {
                       this.props.books.searchResults.map((each, index)=> {
-                    return (
-                      <div key={index} className="bc-book-details">
-                        <img src={each.imageLinks ? each.imageLinks.thumbnail : null} className="bc-book-image"></img>
-                      </div>
-                    );
 
+                        return <div key={index} className="bc-book-details"><img src={each.volumeInfo.imageLinks ? each.volumeInfo.imageLinks.thumbnail : null} className="bc-book-image" alt={each.volumeInfo.title}></img>
+                        <div className="bc-add-book" onClick={this.addBooktoDB.bind(this, each)}><i className="fa fa-plus" aria-hidden="true"></i></div></div>
                   })
                 }
                 </div>

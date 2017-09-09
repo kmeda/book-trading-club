@@ -240,3 +240,36 @@ export var clearSearchResults = ()=>{
     type: "SET_SEARCH_RESULTS"
   }
 }
+
+export var addBooktoDatabase = (book) => {
+  return (dispatch, getState) => {
+    var email = localStorage.getItem("email");
+    axios.post('http://localhost:3050/add_book', {email, book}).then((res)=>{
+      dispatch(fetchMyBooks());
+    });
+  }
+}
+
+export var setMyBooks = (payload)=> {
+  return {
+    type: "SET_MY_BOOKS",
+    payload
+  }
+}
+
+export var fetchMyBooks = ()=>{
+  return (dispatch, getState) => {
+    var email = localStorage.getItem("email");
+    axios.get(`http://localhost:3050/get_books?email=${email}`).then((res)=>{
+      console.log(res.data[0].books);
+      var my_books = res.data[0].books;
+      dispatch(setMyBooks(my_books));
+    }).catch((err) => {console.log(err)});
+  }
+}
+
+export var nukeBooksState = () => {
+  return {
+    type: "NUKE_BOOKS_STATE"
+  }
+}

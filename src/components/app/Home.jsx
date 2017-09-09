@@ -1,12 +1,18 @@
 import React,{Component} from 'react';
 import MenuBar from './MenuBar.jsx';
 import * as Redux from "react-redux";
+var actions = require('../../actions/actions.jsx');
 
 class Home extends Component {
   constructor(props){
     super(props);
 
     this.state = {setClass: null}
+  }
+
+  componentWillMount(){
+    var {dispatch} = this.props;
+    dispatch(actions.fetchMyBooks());
   }
 
   componentDidMount(){
@@ -37,15 +43,16 @@ class Home extends Component {
 
           <div className="bc-books-add">
             <div className="bc-books-list">
-              <div className="bc-each-book-container"><div className="bc-each-book"></div></div>
-              <div className="bc-each-book-container"><div className="bc-each-book"></div></div>
-              <div className="bc-each-book-container"><div className="bc-each-book"></div></div>
-              <div className="bc-each-book-container"><div className="bc-each-book"></div></div>
-              <div className="bc-each-book-container"><div className="bc-each-book"></div></div>
-              <div className="bc-each-book-container"><div className="bc-each-book"></div></div>
-              <div className="bc-each-book-container"><div className="bc-each-book"></div></div>
-              <div className="bc-each-book-container"><div className="bc-each-book"></div></div>
-              <div className="bc-each-book-container"><div className="bc-each-book"></div></div>
+              {
+                this.props.books.myBooks.length > 0 ? this.props.books.myBooks.map((book) =>{
+                  return (
+                    <div key={book.id} className="bc-each-book-container">
+                      <div className="bc-each-book">
+                        <img className="bc-each-book-img" src={book.volumeInfo.imageLinks.thumbnail}></img>
+                      </div>
+                    </div>)
+                }) : null
+              }
             </div>
           </div>
         </div>

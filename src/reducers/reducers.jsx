@@ -109,7 +109,7 @@ export var authReducer = (state={signIn: '', signUp: ''}, action) => {
   }
 }
 
-export var booksReducer = (state={}, action) => {
+export var booksReducer = (state={myBooks:[], allBooks: []}, action) => {
   switch (action.type) {
     case "REQUESTS_PENDING":
       return {
@@ -125,6 +125,16 @@ export var booksReducer = (state={}, action) => {
       return {
         ...state,
         searchResults: null
+      }
+    case "SET_MY_BOOKS":
+      return {
+        ...state,
+        myBooks: action.payload
+      }
+    case "NUKE_BOOKS_STATE":
+      return {
+        myBooks: [],
+        allBooks: []
       }
     default:
     return state;

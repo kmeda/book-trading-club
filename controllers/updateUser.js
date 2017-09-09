@@ -40,7 +40,6 @@ exports.update = function(req, res, next){
 exports.fetchUser = function(req, res, next) {
 
     const email = req.query.email;
-    console.log("Email request param", email);
     User.findOne({email: email}, function(err, user){
 
         if(err) {return next(err)};
@@ -51,4 +50,43 @@ exports.fetchUser = function(req, res, next) {
         }
     });
 
+}
+
+exports.addBook = function(req, res, next) {
+
+  const email = req.body.email;
+  const book = req.body.book;
+  console.log(email);
+  console.log(book);
+  User.findOne({email: email}, function(err, user){
+
+      if(err) {return next(err)};
+
+      if(user) {
+        User.update({email: email}, {
+          $addToSet: {
+            books : book
+          }
+        }).then(function(response){
+          res.send("Book added to list!");
+        }).catch(function(e){console.log(e)});
+      }
+  });
+}
+
+exports.getBooks = function(req, res, next) {
+
+  const email = req.query.email;
+  console.log(email);
+
+  User.findOne({email: email}, function(err, user){
+
+      if(err) {return next(err)};
+
+      if(user) {
+        User.find({email: email}, {books: 1}).then(function(response){
+          res.send(response);
+        }).catch(function(e){console.log(e)});
+      }
+  });
 }

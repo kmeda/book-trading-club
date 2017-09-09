@@ -9,7 +9,9 @@ const userSchema = new Schema({
    password: String,
    firstName: String,
    lastName: String,
-   location: String
+   location: String,
+   books: [],
+   requests: [{type: Object}]
 });
 
 userSchema.pre('save', function(next){

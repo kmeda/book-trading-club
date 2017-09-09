@@ -90,7 +90,7 @@
         color: black
         .bc-search-list
           width: 200px
-          height: 600px
+          height: 750px
           background-color: white
           box-shadow: 0 15px 20px rgba(0,0,0,0.8)
           transform: translate(460px, 1px)
@@ -99,14 +99,24 @@
             width: 100%
             height: 200px
             margin-bottom: 5px
+            position: relative
             .bc-book-image
               width: 100%
-              height: 100%
-              background-size: contain
-            .bc-book-details-all
-              // width: 60%
-              // height: 100%
-              .bc-book-title
+              height: 200px
+              background-size: cover
+
+            .bc-add-book
+              display: flex
+              align-items: center
+              justify-content: center
+              width: 23px
+              height: 23px
+              position: absolute
+              background-color: #beff1f
+              transform: translate(5px, -35px)
+              border-radius: 5px
+              box-shadow: 0 5px 15px rgba(0,0,0,0.9), inset 0 0 5px rgba(0,0,0,0.4)
+              cursor: pointer
 
 
 
@@ -259,6 +269,11 @@
             transition: all 200ms ease-in-out
             &:hover
               box-shadow: 0 6px 13px rgba(0,0,0,0.8)
+            .bc-each-book-img
+              width: 100%
+              height: 100%
+              border-radius: 3px
+              background-size: cover
 
 
 a
