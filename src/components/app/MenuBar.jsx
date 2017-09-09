@@ -139,10 +139,21 @@ class MenuBar extends Component {
                     {
                       this.props.books.searchResults.map((each, index)=> {
                         var image_url = each.volumeInfo.imageLinks ? "https://"+each.volumeInfo.imageLinks.thumbnail.slice(7) : null;
-                        return <div key={index} className="bc-book-details"><img src={ image_url} className="bc-book-image" alt={each.volumeInfo.title}></img>
+                        return (
+                          <div key={index} className="bc-book-details">
+                            <div className="bc-book-title">{each.volumeInfo.title}</div>
+                            <div className="bc-book-detail">
+                              <div className="bc-book-img">
+                                <img src={ image_url} className="bc-book-image" alt={each.volumeInfo.title}></img>
+                                <button className="bc-add-book" onClick={this.addBooktoDB.bind(this, each)}><i className="fa fa-plus" aria-hidden="true"></i></button>
+                              </div>
+                              <div className="bc-book-desc">
+                                {each.volumeInfo.description ? each.volumeInfo.description.slice(0, 460) + "..." : null}
+                              </div>
 
-                        <button className="bc-add-book" onClick={this.addBooktoDB.bind(this, each)}><i className="fa fa-plus" aria-hidden="true"></i></button>
-                      </div>
+                            </div>
+
+                      </div>)
                   })
                 }
                 </div>

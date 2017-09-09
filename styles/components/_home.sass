@@ -89,36 +89,67 @@
         transform: translateX(-494px)
         color: black
         .bc-search-list
-          width: 200px
-          height: 450px
+          width: 450px
+          height: 500px
           background-color: white
           box-shadow: 0 15px 20px rgba(0,0,0,0.8)
-          transform: translate(460px, 1px)
+          transform: translate(360px, 1px)
           overflow: auto
           .bc-book-details
+            display: flex
+            flex-direction: column
             width: 100%
-            height: 200px
+            height: 225px
             margin-bottom: 5px
-            position: relative
-            .bc-book-image
-              width: 100%
-              height: 200px
-              background-size: cover
-
-            .bc-add-book
+            // position: relative
+            background-color: #f4f4f4
+            .bc-book-title
               display: flex
-              align-items: center
               justify-content: center
-              width: 23px
-              height: 23px
-              position: absolute
-              background-color: #beff1f
-              transform: translate(5px, -35px)
-              border-radius: 5px
-              box-shadow: 0 5px 15px rgba(0,0,0,0.9), inset 0 0 5px rgba(0,0,0,0.4)
-              cursor: pointer
-              outline: none
-              border: none
+              align-items: center
+              width: 100%
+              height: 22%
+              font-family: verdana
+              font-weight: bold
+              text-decoration: underline
+              // background-color: yellow
+            .bc-book-detail
+              display: flex
+              width: 100%
+              height: 78%
+              // background-color: cyan
+              .bc-book-img
+                display: flex
+                flex-direction: column
+                align-items: flex-end
+                width: 30%
+                height: 100%
+                .bc-book-image
+                  width: 95%
+                  height: 80%
+                  background-size: cover
+                  box-shadow: 0 3px 10px rgba(0,0,0,0.9)
+                .bc-add-book
+                  display: flex
+                  align-items: center
+                  justify-content: center
+                  width: 95%
+                  height: 10%
+                  background-color: #beff1f
+                  box-shadow: 0 3px 10px rgba(0,0,0,0.9)
+                  cursor: pointer
+                  outline: none
+                  border: none
+              .bc-book-desc
+                display: flex
+                font-size: 0.75em
+                width: 70%
+                height: 100%
+                text-align: justify
+                padding-left: 10px
+                padding-right: 10px
+                font-family: verdana
+                // background-color: rgba(0,0,0,0.5)
 
 
 
