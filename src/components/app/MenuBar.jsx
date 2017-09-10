@@ -127,7 +127,7 @@ class MenuBar extends Component {
 
           <a href='https://www.freecodecamp.org/challenges/manage-a-book-trading-club' target="_blank"><div className="bc-fcclogo"></div></a>
           <Link to='/'><div className={this.props.myBooksActive + " bc-mybooks"}>My Books</div></Link>
-          <Link to='/allbooks'><div className={this.props.allBooksActive + " bc-allbooks"}>All Books</div></Link>
+          <Link to='/allbooks'><div className={this.props.allBooksActive + " bc-allbooks"}>Trade</div></Link>
 
           <div className="bc-books-search">
             <input className="bc-books-searchbar" type="text" placeholder="Search and add books" ref="searchTerm"
