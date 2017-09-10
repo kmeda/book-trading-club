@@ -7,7 +7,10 @@ var actions = require('../../actions/actions.jsx');
 class AllBooks extends Component {
   constructor(props){
     super(props);
-    this.state = {setClass: null}
+    this.state = {
+      setClass: null,
+      hover: false
+    }
   }
 
   componentDidMount(){
@@ -23,9 +26,26 @@ class AllBooks extends Component {
     dispatch(actions.fetchAllBooks());
   }
 
+  handleMouseEnter(id){
+    this.setState({hover: id});
+  }
+
+  handleMouseLeave(){
+    this.setState({hover: false});
+  }
+
+
+
   render(){
     var colorStrip = [];
     for (var i = 1; i <= 10; i++) {colorStrip.push(<div key={i} className={"bc-color-strip-" +i} ></div>);}
+
+    var renderOptions = (book, index)=>{
+      if (this.state.hover === book.uid) {
+        console.log(this.state.hover);
+        return <div className="bc-each-book-details" onMouseLeave={this.handleMouseLeave.bind(this)}></div>
+      }
+    }
 
     return (
       <div className="bc-outer-wrapper">
@@ -40,10 +60,15 @@ class AllBooks extends Component {
                     var image_url = book.volumeInfo.imageLinks.thumbnail;
                     image_url = "https://"+image_url.slice(7);
                     return (
-                      <div key={book.id} className="bc-each-book-container">
+                      <div key={index} className="bc-each-book-container"
+                        onMouseEnter={this.handleMouseEnter.bind(this, book.uid)}
+                        >
                         <div className="bc-each-book">
                           <img className="bc-each-book-img" src={image_url}></img>
                         </div>
+
+                        {renderOptions(book, index)}
+
                       </div>)
                   })
                 })

@@ -290,7 +290,9 @@ export var fetchAllBooks = ()=>{
   return (dispatch, getState) => {
     var email = localStorage.getItem("email");
     axios.get(`${base_url}/get_all_books?email=${email}`).then((res)=>{
+
       console.log(res.data);
+
       dispatch(setAllBooks(res.data));
     });
   }

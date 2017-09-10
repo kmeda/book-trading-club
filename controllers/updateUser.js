@@ -3,6 +3,7 @@ const passport = require("passport");
 const JwtStrategy = require('passport-jwt').Strategy;
 const ExtractJwt = require('passport-jwt').ExtractJwt;
 const LocalStrategy = require('passport-local');
+const uuidv1 = require('uuid/v1');
 
 if (process.env.NODE_ENV === 'production') {
   var secret = process.env.SECRET
@@ -56,6 +57,7 @@ exports.addBook = function(req, res, next) {
 
   const email = req.body.email;
   const book = req.body.book;
+        book.uid = uuidv1();
 
   User.findOne({email: email}, function(err, user){
 
