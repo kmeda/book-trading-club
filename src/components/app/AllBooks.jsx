@@ -40,10 +40,19 @@ class AllBooks extends Component {
     var colorStrip = [];
     for (var i = 1; i <= 10; i++) {colorStrip.push(<div key={i} className={"bc-color-strip-" +i} ></div>);}
 
-    var renderOptions = (book, index)=>{
+    var renderOptions = (user, book, index)=>{
       if (this.state.hover === book.uid) {
         console.log(this.state.hover);
-        return <div className="bc-each-book-details" onMouseLeave={this.handleMouseLeave.bind(this)}></div>
+        return <div className="bc-each-book-details" onMouseLeave={this.handleMouseLeave.bind(this)}>
+          <div className="bc-each-book-useremail">
+            Owner <br/>
+            {user.firstName ? user.firstName : null}
+            {user.lastName ? " " + user.lastName : null}
+            <br/>
+            {user.user}
+
+          </div>
+        </div>
       }
     }
 
@@ -67,7 +76,7 @@ class AllBooks extends Component {
                           <img className="bc-each-book-img" src={image_url}></img>
                         </div>
 
-                        {renderOptions(book, index)}
+                        {renderOptions(user, book, index)}
 
                       </div>)
                   })
