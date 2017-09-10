@@ -253,7 +253,7 @@ export var addBooktoDatabase = (book) => {
     var email = localStorage.getItem("email");
     //disable add button here
     dispatch(addingBook(true));
-    axios.post('${base_url}/add_book', {email, book}).then((res)=>{
+    axios.post(`${base_url}/add_book`, {email, book}).then((res)=>{
       dispatch(fetchMyBooks());
     });
   }
@@ -266,6 +266,13 @@ export var setMyBooks = (payload)=> {
   }
 }
 
+export var setAllBooks = (payload)=> {
+    return {
+      type: "SET_ALL_BOOKS",
+      payload
+    }
+}
+
 export var fetchMyBooks = ()=>{
   return (dispatch, getState) => {
     var email = localStorage.getItem("email");
@@ -276,6 +283,16 @@ export var fetchMyBooks = ()=>{
       //enable button back
       dispatch(addingBook(false));
     }).catch((err) => {console.log(err)});
+  }
+}
+
+export var fetchAllBooks = ()=>{
+  return (dispatch, getState) => {
+    var email = localStorage.getItem("email");
+    axios.get(`${base_url}/get_all_books?email=${email}`).then((res)=>{
+      console.log(res.data);
+      dispatch(setAllBooks(res.data));
+    });
   }
 }
 

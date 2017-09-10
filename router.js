@@ -28,4 +28,6 @@ module.exports = function(app) {
 
   app.post('/add_book', updateUser.addBook);
   app.get('/get_books', updateUser.getBooks);
+
+  app.get('/get_all_books', updateUser.getAllBooks);
 }

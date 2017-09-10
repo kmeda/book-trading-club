@@ -56,8 +56,7 @@ exports.addBook = function(req, res, next) {
 
   const email = req.body.email;
   const book = req.body.book;
-  console.log(email);
-  console.log(book);
+
   User.findOne({email: email}, function(err, user){
 
       if(err) {return next(err)};
@@ -77,7 +76,6 @@ exports.addBook = function(req, res, next) {
 exports.getBooks = function(req, res, next) {
 
   const email = req.query.email;
-  console.log(email);
 
   User.findOne({email: email}, function(err, user){
 
@@ -89,4 +87,32 @@ exports.getBooks = function(req, res, next) {
         }).catch(function(e){console.log(e)});
       }
   });
+}
+
+exports.getAllBooks = function(req, res, next) {
+  const email = req.query.email;
+
+  User.find({}).then(function(response){
+    var users = response.filter(function(user){
+      return user.email !== email;
+    });
+
+    var myObj = users.map(function(user){
+      var obj = {
+        user: user.email,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        location: user.location,
+        books: user.books
+      }
+      return obj;
+    });
+
+    var allBooks = myObj.filter(function(obj){
+      return obj.books.length > 0;
+    });
+
+    res.send(allBooks);
+  })
+
 }

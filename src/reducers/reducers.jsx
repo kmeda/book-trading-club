@@ -136,6 +136,11 @@ export var booksReducer = (state={myBooks:[], allBooks: [], searchResults:[]}, a
         ...state,
         addingBook: action.flag
       }
+    case "SET_ALL_BOOKS":
+      return {
+        ...state,
+        allBooks: action.payload
+      }
     case "NUKE_BOOKS_STATE":
       return {
         myBooks: [],
