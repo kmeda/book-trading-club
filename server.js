@@ -13,7 +13,7 @@ const app = express();
 
 mongoose.connect('mongodb://admin:admin@ds153003.mlab.com:53003/fcc-book-club', {useMongoClient: true});
 
-app.use(morgan('combined'));
+// app.use(morgan('combined'));
 app.use(cors());
 app.use(bodyParser.json({type: '*/*'}));
 app.use(bodyParser.urlencoded({ extended: true }));

@@ -32,14 +32,38 @@ class Home extends Component {
         <div className="bc-color-strip">{ colorStrip }</div>
         <MenuBar myBooksActive={this.state.setClass}/>
         <div className="bc-books-container">
+          {
+            this.props.books.requestsReceived.length > 0 ?
+            <div className="bc-books-requests">
+                {
+                  this.props.books.requestsReceived.map((request, index)=>{
+                      return <div key={index} className="bc-books-request">
+                        <div className="bc-books-request-img">
+                          <img src={request.book.volumeInfo.imageLinks.smallThumbnail}></img>
+                          <div className="bc-books-request-details">
+                            <div className="bc-books-request-user">
+                              <div className="bc-books-request-user-label">Trader</div>
+                              {/* <br/> */}
+                              <div className="bc-books-request-userEmail">{request.trader}</div>
+                            </div>
 
-          <div className="bc-books-requests">
-            <div className="bc-books-request"></div>
-            <div className="bc-books-request"></div>
-            <div className="bc-books-request"></div>
-            <div className="bc-books-request"></div>
-            <div className="bc-books-request"></div>
+                            <div className="bc-books-request-btns">
+                              <i className="fa fa-check" aria-hidden="true"></i>
+                              <i className="fa fa-times" aria-hidden="true"></i>
+                            </div>
+
+                            <div className="bc-books-request-time">1 hour ago..</div>
+                          </div>
+                        </div>
+                      </div>
+                  })
+              }
           </div>
+
+            : null
+
+          }
+
 
           <div className="bc-books-add">
             <div className="bc-books-list">
@@ -53,7 +77,7 @@ class Home extends Component {
                         <img className="bc-each-book-img" src={image_url}></img>
                       </div>
                     </div>)
-                }) : null
+                }) : <i className="bc-loading-allbooks fa fa-refresh fa-spin fa-fw"></i>
               }
             </div>
           </div>

@@ -276,15 +276,19 @@ export var setAllBooks = (payload)=> {
 export var fetchMyBooks = ()=>{
   return (dispatch, getState) => {
     var email = localStorage.getItem("email");
-    axios.get(`${base_url}/get_books?email=${email}`).then((res)=>{
-      console.log(res.data[0].books);
+    axios.get(`${base_url}/get_my_books?email=${email}`).then((res)=>{
+      console.log(res.data);
       var my_books = res.data[0].books;
+      var requests = res.data[0].requests_received;
       dispatch(setMyBooks(my_books));
+      dispatch(setRequestsReceived(requests));
       //enable button back
       dispatch(addingBook(false));
     }).catch((err) => {console.log(err)});
   }
 }
+
+
 
 export var fetchAllBooks = ()=>{
   return (dispatch, getState) => {
@@ -293,7 +297,8 @@ export var fetchAllBooks = ()=>{
 
       console.log(res.data);
 
-      dispatch(setAllBooks(res.data));
+      dispatch(setAllBooks(res.data.allBooks));
+      dispatch(setRequestsSent(res.data.requestsSent));
     });
   }
 }
@@ -301,5 +306,36 @@ export var fetchAllBooks = ()=>{
 export var nukeBooksState = () => {
   return {
     type: "NUKE_BOOKS_STATE"
+  }
+}
+
+export var setTradeReqProg = (flag)=>{
+  return {
+    type: "SET_TRADE_REQ_PROG",
+    flag
+  }
+}
+
+export var setRequestsSent = (payload)=>{
+  return {
+    type: "SET_REQUESTS_SENT",
+    payload
+  }
+}
+
+export var setRequestsReceived = (payload) => {
+  return {
+    type: "SET_REQUESTS_RECEIVED",
+    payload
+  }
+}
+
+export var updateUserRequests = (payload) => {
+  return (dispatch, getState) => {
+    axios.post(`${base_url}/request_book`, payload).then((res)=>{
+      console.log(res);
+      dispatch(setRequestsSent(res.data[0].requests_sent));
+      dispatch(setTradeReqProg(false));
+    }).catch((e)=>console.log(e));
   }
 }

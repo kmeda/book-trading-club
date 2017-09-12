@@ -46,7 +46,7 @@ exports.fetchUser = function(req, res, next) {
         if(err) {return next(err)};
 
         if(user) {
-          var userDetails = {firstName: user.firstName, lastName: user.lastName, location: user.location}
+          var userDetails = {firstName: user.firstName, lastName: user.lastName, email: user.email, location: user.location}
           res.send(userDetails);
         }
     });
@@ -75,7 +75,7 @@ exports.addBook = function(req, res, next) {
   });
 }
 
-exports.getBooks = function(req, res, next) {
+exports.getMyBooks = function(req, res, next) {
 
   const email = req.query.email;
 
@@ -84,7 +84,7 @@ exports.getBooks = function(req, res, next) {
       if(err) {return next(err)};
 
       if(user) {
-        User.find({email: email}, {books: 1}).then(function(response){
+        User.find({email: email}, {books: 1, requests_received: 1}).then(function(response){
           res.send(response);
         }).catch(function(e){console.log(e)});
       }
@@ -114,7 +114,41 @@ exports.getAllBooks = function(req, res, next) {
       return obj.books.length > 0;
     });
 
-    res.send(allBooks);
+    var thisUser = response.filter(function(user){
+      return user.email === email;
+    });
+
+    var thisUserRequestsSent = thisUser[0].requests_sent;
+
+    var payload = {allBooks: allBooks, requestsSent: thisUserRequestsSent}
+    res.send(payload);
   })
+
+}
+
+exports.updateRequests = function(req, res, next) {
+  var trader = req.body.trader;
+  var owner = req.body.owner;
+  var book = req.body.book;
+
+  User.update({email: trader}, {
+    $addToSet: {requests_sent: book}
+  }).then(function(){
+    User.update({email: owner}, {
+      $addToSet: {requests_received: {trader: trader, book: book}}
+
+    }).then(function(){
+      User.find({email: trader}, {requests_sent: 1}).then(function(response){
+        res.send(response);
+  })
+})
+}).catch(function(e){console.log(e)});
+}
+
+exports.getRequestsSent = function(req, res, next) {
+
+}
+
+exports.getRequestsReceived = function(req, res, next) {
 
 }

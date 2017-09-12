@@ -97,9 +97,9 @@ class MenuBar extends Component {
             <form className="bc-settings-form">
               <div>Profile Settings</div>
               <br/>
-              <input className="bc-settings-input" type="text" placeholder={(Object.keys(this.props.auth.user)).length <= 0 ? "First Name" : "First Name -" + this.props.auth.user.firstName} ref="firstname"/>
-              <input className="bc-settings-input" type="text" placeholder={(Object.keys(this.props.auth.user)).length <= 0 ? "Last Name" : "Last Name -" + this.props.auth.user.lastName} ref="lastname"/>
-              <input className="bc-settings-input" type="text" placeholder={(Object.keys(this.props.auth.user)).length <= 0 ? "Location" : "Location -" + this.props.auth.user.location} ref="location"/>
+              <input className="bc-settings-input" type="text" placeholder={(Object.keys(this.props.auth.user)).length <= 1 ? "First Name" : "First Name -" + this.props.auth.user.firstName} ref="firstname"/>
+              <input className="bc-settings-input" type="text" placeholder={(Object.keys(this.props.auth.user)).length <= 1 ? "Last Name" : "Last Name -" + this.props.auth.user.lastName} ref="lastname"/>
+              <input className="bc-settings-input" type="text" placeholder={(Object.keys(this.props.auth.user)).length <= 1 ? "Location" : "Location -" + this.props.auth.user.location} ref="location"/>
                 <br/>
                 {
                   this.props.settings.saveSettings ?
@@ -162,7 +162,7 @@ class MenuBar extends Component {
 
 
           <div className="bc-profile">
-            {(Object.keys(this.props.auth.user)).length <= 0 ? null : this.props.auth.user.firstName + " " + this.props.auth.user.lastName}
+            {(Object.keys(this.props.auth.user)).length <= 1 ? null : this.props.auth.user.firstName + " " + this.props.auth.user.lastName}
           </div>
           <div className="bc-notification">
             <i className="fa fa-bell" aria-hidden="true">
@@ -173,7 +173,7 @@ class MenuBar extends Component {
           <div className={this.props.settings.showSettings ? "bc-settings bc-settings-clicked" : "bc-settings" }
             onClick={this.showSettings.bind(this)}>
             <i className="fa fa-cog" aria-hidden="true" >
-              {(Object.keys(this.props.auth.user)).length <= 0 ? <div className="bc-settings-alert"><i className="fa fa-exclamation" aria-hidden="true"></i></div> : null }
+              {(Object.keys(this.props.auth.user)).length <= 1 ? <div className="bc-settings-alert"><i className="fa fa-exclamation" aria-hidden="true"></i></div> : null }
             </i>
           </div>
           {this.props.settings.showSettings ? renderSettingsBox() : null}

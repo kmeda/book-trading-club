@@ -2,6 +2,7 @@ import React,{Component} from 'react';
 import MenuBar from './MenuBar.jsx';
 import * as Redux from "react-redux";
 import axios from 'axios';
+import _ from 'lodash';
 var actions = require('../../actions/actions.jsx');
 
 class AllBooks extends Component {
@@ -27,30 +28,51 @@ class AllBooks extends Component {
   }
 
   handleMouseEnter(id){
+
     this.setState({hover: id});
   }
 
   handleMouseLeave(){
+
     this.setState({hover: false});
   }
 
+  handleTradeRequest(user, book){
+    var {dispatch} = this.props;
+    var trader = this.props.auth.user.email;
+    var owner = user.user;
+    // var book = book;
 
+    const payload = {trader, owner, book};
+    console.log(payload);
+    dispatch(actions.setTradeReqProg(true));
+    dispatch(actions.updateUserRequests(payload));
+  }
 
   render(){
     var colorStrip = [];
     for (var i = 1; i <= 10; i++) {colorStrip.push(<div key={i} className={"bc-color-strip-" +i} ></div>);}
 
-    var renderOptions = (user, book, index)=>{
+    var renderOptions = (user, book)=>{
       if (this.state.hover === book.uid) {
-        console.log(this.state.hover);
         return <div className="bc-each-book-details" onMouseLeave={this.handleMouseLeave.bind(this)}>
-          <div className="bc-each-book-useremail">
-            Owner <br/>
-            {user.firstName ? user.firstName : null}
-            {user.lastName ? " " + user.lastName : null}
+          <div className="bc-each-book-user">
+            <div><i className="fa fa-user-circle-o fa-2x"></i></div>
+            <div className="bc-each-book-userName">{user.firstName ? user.firstName : "NA"}
+            {user.lastName ? " " + user.lastName : null}</div>
             <br/>
-            {user.user}
+            <div><i className="fa fa-envelope-o"></i></div>
+            <div className="bc-each-book-userEmail">{user.user}</div>
+          </div>
 
+          <div className="bc-each-book-request">
+            {
+              _.find(this.props.books.requestsSent, {uid: book.uid})
+              ? "Trade Requested"
+              : (this.props.books.sendingTradeReq
+                ? "Sending..."
+                : <button onClick={this.handleTradeRequest.bind(this, user, book)}>Trade</button>)
+            }
           </div>
         </div>
       }
@@ -64,7 +86,7 @@ class AllBooks extends Component {
           <div className="bc-books-add">
             <div className="bc-books-list">
               {
-                this.props.books.allBooks.length > 0 ? this.props.books.allBooks.map((user) =>{
+                this.props.books.allBooks.length > 0 && this.props.auth.user ? this.props.books.allBooks.map((user) =>{
                   return user.books.map((book, index)=>{
                     var image_url = book.volumeInfo.imageLinks.thumbnail;
                     image_url = "https://"+image_url.slice(7);
@@ -75,13 +97,11 @@ class AllBooks extends Component {
                         <div className="bc-each-book">
                           <img className="bc-each-book-img" src={image_url}></img>
                         </div>
-
-                        {renderOptions(user, book, index)}
-
+                        {renderOptions(user, book)}
                       </div>)
                   })
                 })
-                : null
+                : <i className="bc-loading-allbooks fa fa-refresh fa-spin fa-fw"></i>
               }
             </div>
           </div>
@@ -94,7 +114,8 @@ class AllBooks extends Component {
 export default Redux.connect(
   (state) => {
     return {
-      books: state.books
+      books: state.books,
+      auth: state.auth
     }
   }
 )(AllBooks);

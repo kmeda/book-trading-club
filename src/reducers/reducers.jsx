@@ -109,13 +109,16 @@ export var authReducer = (state={signIn: '', signUp: ''}, action) => {
   }
 }
 
-export var booksReducer = (state={myBooks:[], allBooks: [], searchResults:[]}, action) => {
+var booksState = {
+  myBooks:[],
+  allBooks: [],
+  searchResults:[],
+  requestsSent: [],
+  requestsReceived: []
+}
+
+export var booksReducer = (state= booksState, action) => {
   switch (action.type) {
-    case "REQUESTS_PENDING":
-      return {
-        ...state,
-        requestsPending: action.payload
-      }
     case "SET_SEARCH_RESULTS":
       return {
         ...state,
@@ -141,11 +144,28 @@ export var booksReducer = (state={myBooks:[], allBooks: [], searchResults:[]}, a
         ...state,
         allBooks: action.payload
       }
+    case "SET_TRADE_REQ_PROG":
+      return {
+        ...state,
+        sendingTradeReq: action.flag
+      }
+    case "SET_REQUESTS_SENT":
+      return {
+        ...state,
+        requestsSent: action.payload
+      }
+    case "SET_REQUESTS_RECEIVED":
+      return {
+        ...state,
+        requestsReceived: action.payload
+      }
     case "NUKE_BOOKS_STATE":
       return {
         myBooks: [],
         allBooks: [],
-        searchResults:[]
+        searchResults:[],
+        requestsSent: [],
+        requestsReceived: []
       }
     default:
     return state;

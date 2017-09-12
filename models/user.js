@@ -11,7 +11,8 @@ const userSchema = new Schema({
    lastName: String,
    location: String,
    books: [],
-   requests: [{type: Object}]
+   requests_sent: [],
+   requests_received: []
 });
 
 userSchema.pre('save', function(next){
