@@ -130,12 +130,13 @@ exports.updateRequests = function(req, res, next) {
   var trader = req.body.trader;
   var owner = req.body.owner;
   var book = req.body.book;
+  var timestamp = new Date();
 
   User.update({email: trader}, {
     $addToSet: {requests_sent: book}
   }).then(function(){
     User.update({email: owner}, {
-      $addToSet: {requests_received: {trader: trader, book: book}}
+      $addToSet: {requests_received: {trader: trader, book: book, timestamp: timestamp.getTime()}}
 
     }).then(function(){
       User.find({email: trader}, {requests_sent: 1}).then(function(response){

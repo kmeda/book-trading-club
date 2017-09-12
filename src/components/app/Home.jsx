@@ -1,6 +1,7 @@
 import React,{Component} from 'react';
 import MenuBar from './MenuBar.jsx';
 import * as Redux from "react-redux";
+import TimeAgo from 'react-timeago'
 var actions = require('../../actions/actions.jsx');
 
 class Home extends Component {
@@ -52,7 +53,7 @@ class Home extends Component {
                               <i className="fa fa-times" aria-hidden="true"></i>
                             </div>
 
-                            <div className="bc-books-request-time">1 hour ago..</div>
+                            <div className="bc-books-request-time"><TimeAgo date={request.timestamp}/></div>
                           </div>
                         </div>
                       </div>
