@@ -21,8 +21,12 @@ class AllBooks extends Component {
       console.log("book added");
       var {dispatch} = this.props;
       dispatch(actions.fetchAllBooks());
-    })
+    });
 
+    socket.on("pull_requests_sent", ()=>{
+      var {dispatch} = this.props;
+      dispatch(actions.fetchRequestsSent());
+    });
   }
 
   componentDidMount(){

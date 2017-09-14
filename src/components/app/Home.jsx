@@ -17,6 +17,12 @@ class Home extends Component {
       var {dispatch} = this.props;
       dispatch(actions.fetchRequestsRecieved());
     });
+
+    socket.on("pull_new_books", ()=>{
+      console.log("book added");
+      var {dispatch} = this.props;
+      dispatch(actions.fetchMyBooks());
+    });
   }
 
   componentWillMount(){
@@ -32,13 +38,18 @@ class Home extends Component {
     this.setState({setClass: ""});
   }
 
-  cancelRequest(request){
+  cancelRequest(request_id, trader_email){
     var {dispatch} = this.props;
-    console.log(request);
+    var owner = this.props.auth.user.email;
+    var payload = {request_id, trader_email, owner}
+    dispatch(actions.cancelRequest(payload));
   }
-  approveRequest(request){
+
+  approveRequest(request_book, request_id, trader_email){
     var {dispatch} = this.props;
-    console.log(request);
+    var owner = this.props.auth.user.email;
+    var payload = {request_id, trader_email, owner, request_book};
+    dispatch(actions.approveRequest(payload));
   }
 
   render(){
@@ -72,8 +83,8 @@ class Home extends Component {
                             </div>
 
                             <div className="bc-books-request-btns">
-                              <i onClick={this.approveRequest.bind(this, request.request_id)} className="fa fa-check" aria-hidden="true"></i>
-                              <i onClick={this.cancelRequest.bind(this, request.request_id)} className="fa fa-times" aria-hidden="true"></i>
+                              <i onClick={this.approveRequest.bind(this, request.book, request.request_id, request.trader)} className="fa fa-check" aria-hidden="true"></i>
+                              <i onClick={this.cancelRequest.bind(this, request.request_id, request.trader)} className="fa fa-times" aria-hidden="true"></i>
                             </div>
 
                             <div className="bc-books-request-time"><TimeAgo date={request.timestamp}/></div>

@@ -165,22 +165,61 @@ exports.requestsReceived = function(req, res, next) {
     });
 }
 
-// exports.requestsSent = function(req, res, next) {
-//
-// }
-//
-// exports.cancelRequest = function(req, res, next) {
-//   //get owner email
-//     //FIND REQUEST ID and remove it
-//   //then
-//     //get trader email
-//       //find request id and remove it
-//
-//     //then
-//       // package owner requests_recieved, trader requests_sent
-//         // send them back and update state
-// }
-//
-// exports.approveRequest = function(req, res, next) {
-//
-// }
+exports.requestsSent = function(req, res, next) {
+  var email = req.query.email;
+  // console.log(email);
+  User.findOne({email: email}, function(err, user){
+
+      if(err) {return next(err)};
+
+      if(user) {
+        User.find({email: email}, {requests_sent: 1}).then(function(response){
+          // console.log(response);
+          res.send(response);
+        }).catch(function(e){console.log(e)});
+      }
+  });
+}
+
+exports.cancelRequest = function(req, res, next) {
+
+  var request_id = req.body.request_id;
+  var trader = req.body.trader_email;
+  var owner = req.body.owner;
+
+  User.update({email: owner},{$pull: {requests_received: {request_id: request_id}}}).then(function(){
+    User.update({email: trader}, {$pull: {requests_sent: {request_id: request_id}}}).then( function(){
+      res.send("Request Cancelled");
+    })
+  }).catch((err) => {console.log(err);});
+}
+
+exports.approveRequest = function(req, res, next) {
+  var request_id = req.body.request_id;
+  var trader = req.body.trader_email;
+  var owner = req.body.owner;
+  var book = req.body.request_book;
+
+  //remove request from owner
+  //remove request from trader
+  //remove book from owner
+  //transfer ownership to trader and add book to trader
+  //send success message
+
+  // on success
+    // UI challenges
+      // ON EMIT
+      //fetch myBooks
+      //fetch allbooks
+
+      User.update({email: owner},{$pull: {requests_received: {request_id: request_id}}}).then(function(){
+        User.update({email: trader}, {$pull: {requests_sent: {request_id: request_id}}}).then( function(){
+          User.update({email:owner}, {$pull: {books: {uid: book.uid}}}).then(function(){
+            User.update({email:trader}, {$addToSet: {books: book}}).then(function(){
+              res.send("Trade Successful");
+            })
+          })
+        })
+      }).catch((err) => {console.log(err);});
+
+}

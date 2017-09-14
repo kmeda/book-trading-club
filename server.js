@@ -23,8 +23,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(favicon(path.join(__dirname + '/favicon.ico')));
 app.use(express.static('dist'));
 
-// router();
-
 io.sockets.on('connection', function (socket) {
     console.log('client connected');
     socket.on('connected', function(){

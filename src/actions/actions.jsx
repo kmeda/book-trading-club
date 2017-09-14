@@ -370,7 +370,37 @@ export var fetchRequestsRecieved = () => {
   }
 }
 
+export var fetchRequestsSent = () => {
+  return (dispatch, getState) => {
+    var email = getState().auth.user.email;
+    // console.log(email);
+    axios.get(`${base_url}/requests_sent?email=${email}`).then((res)=>{
+      console.log(res.data);
+      var requests = res.data[0].requests_sent;
+      dispatch(setRequestsSent(requests));
+    })
+  }
+}
 
-export var rejectBookRequest = ()=>{
+export var cancelRequest = (payload)=>{
+  return (dispatch, getState) => {
+    axios.post(`${base_url}/cancel_request`, payload).then((res)=>{
+      console.log(res.data);
+      if (res.data === "Request Cancelled") {
+        socket.emit("request_cancelled");
+      }
+    }).catch((err) => {console.log(err);});
+  }
+}
 
+
+export var approveRequest = (payload)=>{
+  return (dispatch, getState) => {
+    axios.post(`${base_url}/approve_request`, payload).then((res)=>{
+      console.log(res.data);
+      if (res.data === "Trade Successful") {
+        socket.emit("request_approved");
+      }
+    }).catch((err) => {console.log(err);});
+  }
 }
