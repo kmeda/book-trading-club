@@ -3,7 +3,15 @@ import { push } from 'react-router-redux';
 import _ from "lodash";
 
 import openSocket from 'socket.io-client';
-const socket = openSocket('http://localhost:3050');
+
+if (process.env.NODE_ENV === 'production') {
+  var socket_url = 'https://fcc-booktrading-club.herokuapp.com';
+} else {
+  var socket_url = 'http://localhost:3050';
+}
+
+const socket = openSocket(socket_url);
+
 
 if (process.env.NODE_ENV === 'production') {
   var base_url = 'https://fcc-booktrading-club.herokuapp.com';
