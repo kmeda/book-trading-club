@@ -250,13 +250,20 @@
   .bc-books-container
     width: 1200px
     height: auto
+    .bc-books-requests-header
+      margin-top: 20px
+      margin-left: 10px
+      font-family: verdana
+      font-size: 1em
+      text-align: center
+      text-decoration: underline
+
     .bc-books-requests
-      // display: none
       overflow: auto
       white-space: nowrap
       width: 100%
       height: 90px
-      margin-top: 20px
+      margin-top: 10px
       background-color: rgba(200, 196, 180, 0.4)
       .bc-books-request
         display: inline-block
@@ -290,16 +297,14 @@
             align-items: center
             height: 100%
             width: auto
-            color: #bbbbbb
+            color: #817e7e
             padding-left: 5px
             padding-right: 5px
             text-align: center
             font-family: verdana
             font-size: 0.8em
             .bc-books-request-user
-              // min-width: 125px
               height: 30%
-              // background-color: pink
               .bc-books-request-user-label
                 text-decoration: underline
               .bc-books-request-userEmail
@@ -317,7 +322,7 @@
                 position: absolute
                 cursor: pointer
                 font-size: 1.2em
-                color: #ebebeb
+                color: #9c9c9c
                 transform: translateX(-20px)
                 transition: all 50ms ease-in-out
                 &:hover
@@ -328,7 +333,7 @@
                 font-size: 1.2em
                 cursor: pointer
                 position: absolute
-                color: #ebebeb
+                color: #9c9c9c
                 transform: translateX(20px)
                 transition: all 50ms ease-in-out
                 &:hover

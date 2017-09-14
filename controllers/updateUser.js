@@ -69,6 +69,8 @@ exports.addBook = function(req, res, next) {
             books : book
           }
         }).then(function(response){
+          // emit the added
+
           res.send("Book added to list!");
         }).catch(function(e){console.log(e)});
       }
@@ -131,12 +133,13 @@ exports.updateRequests = function(req, res, next) {
   var owner = req.body.owner;
   var book = req.body.book;
   var timestamp = new Date();
+  var request_id = uuidv1();
 
   User.update({email: trader}, {
-    $addToSet: {requests_sent: book}
+    $addToSet: {requests_sent: {request_id: request_id, book: book}}
   }).then(function(){
     User.update({email: owner}, {
-      $addToSet: {requests_received: {trader: trader, book: book, timestamp: timestamp.getTime()}}
+      $addToSet: {requests_received: {request_id: request_id, trader: trader, book: book, timestamp: timestamp.getTime()}}
 
     }).then(function(){
       User.find({email: trader}, {requests_sent: 1}).then(function(response){
@@ -146,10 +149,38 @@ exports.updateRequests = function(req, res, next) {
 }).catch(function(e){console.log(e)});
 }
 
-exports.getRequestsSent = function(req, res, next) {
+exports.requestsReceived = function(req, res, next) {
+    var email = req.query.email;
+    // console.log(email);
+    User.findOne({email: email}, function(err, user){
 
+        if(err) {return next(err)};
+
+        if(user) {
+          User.find({email: email}, {requests_received: 1}).then(function(response){
+            // console.log(response);
+            res.send(response);
+          }).catch(function(e){console.log(e)});
+        }
+    });
 }
 
-exports.getRequestsReceived = function(req, res, next) {
-
-}
+// exports.requestsSent = function(req, res, next) {
+//
+// }
+//
+// exports.cancelRequest = function(req, res, next) {
+//   //get owner email
+//     //FIND REQUEST ID and remove it
+//   //then
+//     //get trader email
+//       //find request id and remove it
+//
+//     //then
+//       // package owner requests_recieved, trader requests_sent
+//         // send them back and update state
+// }
+//
+// exports.approveRequest = function(req, res, next) {
+//
+// }

@@ -1,5 +1,9 @@
 import axios from 'axios';
 import { push } from 'react-router-redux';
+import _ from "lodash";
+
+import openSocket from 'socket.io-client';
+const socket = openSocket('http://localhost:3050');
 
 if (process.env.NODE_ENV === 'production') {
   var base_url = 'https://fcc-booktrading-club.herokuapp.com';
@@ -217,7 +221,7 @@ export var saveUserSettings = (settings) => {
 
 
     axios.post(`${base_url}/update_user`, JSON.stringify(settings), headers).then((res)=>{
-      console.log(res);
+      // console.log(res);
         dispatch(setUserDetails(settings));
         dispatch(saveSettings(false));
         dispatch(showSettings(false));
@@ -254,6 +258,7 @@ export var addBooktoDatabase = (book) => {
     //disable add button here
     dispatch(addingBook(true));
     axios.post(`${base_url}/add_book`, {email, book}).then((res)=>{
+      socket.emit("book_added");
       dispatch(fetchMyBooks());
     });
   }
@@ -273,29 +278,41 @@ export var setAllBooks = (payload)=> {
     }
 }
 
+export var noBooksToShow = (flag) => {
+  return {
+    type: "NO_BOOKS_TO_SHOW",
+    flag
+  }
+}
+
 export var fetchMyBooks = ()=>{
   return (dispatch, getState) => {
     var email = localStorage.getItem("email");
     axios.get(`${base_url}/get_my_books?email=${email}`).then((res)=>{
-      console.log(res.data);
+      // console.log(res.data);
       var my_books = res.data[0].books;
-      var requests = res.data[0].requests_received;
       dispatch(setMyBooks(my_books));
+
+      var requests = res.data[0].requests_received;
       dispatch(setRequestsReceived(requests));
       //enable button back
       dispatch(addingBook(false));
+
+      if (my_books.length === 0) {
+        dispatch(noBooksToShow(true));
+      } else {
+        dispatch(noBooksToShow(false));
+      }
     }).catch((err) => {console.log(err)});
   }
 }
-
-
 
 export var fetchAllBooks = ()=>{
   return (dispatch, getState) => {
     var email = localStorage.getItem("email");
     axios.get(`${base_url}/get_all_books?email=${email}`).then((res)=>{
 
-      console.log(res.data);
+      // console.log(res.data);
 
       dispatch(setAllBooks(res.data.allBooks));
       dispatch(setRequestsSent(res.data.requestsSent));
@@ -333,9 +350,27 @@ export var setRequestsReceived = (payload) => {
 export var updateUserRequests = (payload) => {
   return (dispatch, getState) => {
     axios.post(`${base_url}/request_book`, payload).then((res)=>{
-      console.log(res);
+      // console.log(res);
       dispatch(setRequestsSent(res.data[0].requests_sent));
       dispatch(setTradeReqProg(false));
+      socket.emit("request_sent");
     }).catch((e)=>console.log(e));
   }
+}
+
+export var fetchRequestsRecieved = () => {
+  return (dispatch, getState) => {
+    var email = getState().auth.user.email;
+    // console.log(email);
+    axios.get(`${base_url}/requests_received?email=${email}`).then((res)=>{
+      console.log(res.data);
+      var requests = res.data[0].requests_received;
+      dispatch(setRequestsReceived(requests));
+    })
+  }
+}
+
+
+export var rejectBookRequest = ()=>{
+
 }

@@ -3,6 +3,10 @@ import MenuBar from './MenuBar.jsx';
 import * as Redux from "react-redux";
 import axios from 'axios';
 import _ from 'lodash';
+
+import openSocket from 'socket.io-client';
+const socket = openSocket('http://localhost:3050');
+
 var actions = require('../../actions/actions.jsx');
 
 class AllBooks extends Component {
@@ -12,10 +16,18 @@ class AllBooks extends Component {
       setClass: null,
       hover: false
     }
+
+    socket.on("pull_new_books", ()=>{
+      console.log("book added");
+      var {dispatch} = this.props;
+      dispatch(actions.fetchAllBooks());
+    })
+
   }
 
   componentDidMount(){
     this.setState({setClass: "bc-allbooks-active"});
+
   }
 
   componentWillUnmount(){
@@ -28,12 +40,10 @@ class AllBooks extends Component {
   }
 
   handleMouseEnter(id){
-
     this.setState({hover: id});
   }
 
   handleMouseLeave(){
-
     this.setState({hover: false});
   }
 
@@ -44,7 +54,7 @@ class AllBooks extends Component {
     // var book = book;
 
     const payload = {trader, owner, book};
-    console.log(payload);
+    // console.log(payload);
     dispatch(actions.setTradeReqProg(true));
     dispatch(actions.updateUserRequests(payload));
   }
@@ -67,7 +77,7 @@ class AllBooks extends Component {
 
           <div className="bc-each-book-request">
             {
-              _.find(this.props.books.requestsSent, {uid: book.uid})
+              _.find(this.props.books.requestsSent, {book: {uid: book.uid}})
               ? "Trade Requested"
               : (this.props.books.sendingTradeReq
                 ? "Sending..."

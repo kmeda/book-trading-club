@@ -31,6 +31,9 @@ module.exports = function(app) {
   app.get('/get_all_books', updateUser.getAllBooks);
 
   app.post('/request_book', updateUser.updateRequests);
-  app.get('/get_requests_sent', updateUser.getRequestsSent);
-  app.get('/get_requests_received', updateUser.getRequestsReceived);
+  app.get('/requests_received', updateUser.requestsReceived);
+  // app.get('/requests_sent', updateUser.requestsSent);
+
+  // app.post('/cancel_request', updateUser.cancelRequest);
+  // app.post('/approve_request', updateUser.approveRequest);
 }

@@ -134,6 +134,11 @@ export var booksReducer = (state= booksState, action) => {
         ...state,
         myBooks: action.payload
       }
+    case "NO_BOOKS_TO_SHOW":
+      return {
+        ...state,
+        noBooksToShow: action.flag
+      }
     case "ADDING_BOOK":
       return {
         ...state,
