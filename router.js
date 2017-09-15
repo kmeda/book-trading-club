@@ -8,17 +8,15 @@ const requireAuth = passport.authenticate('jwt', {session: false});
 const requireSignin = passport.authenticate('local', {session: false});
 
 module.exports = function(app) {
-  app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'dist/index.html'));
-  });
 
-  app.get('/signin', function(req, res, next){
-    res.redirect('https://fcc-booktrading-club.herokuapp.com');
-  });
 
-  app.get('/signup', function(req, res, next){
-    res.redirect('https://fcc-booktrading-club.herokuapp.com');
-  })
+  // app.get('/signin', function(req, res, next){
+  //   res.redirect('https://fcc-booktrading-club.herokuapp.com');
+  // });
+  //
+  // app.get('/signup', function(req, res, next){
+  //   res.redirect('https://fcc-booktrading-club.herokuapp.com');
+  // })
 
   app.post('/signin_user', requireSignin, Authentication.signin);
   app.post('/signup_user', Authentication.signup);
@@ -37,4 +35,8 @@ module.exports = function(app) {
 
   app.post('/cancel_request', updateUser.cancelRequest);
   app.post('/approve_request', updateUser.approveRequest);
+
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'dist/index.html'));
+  });
 }
