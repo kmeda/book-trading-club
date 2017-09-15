@@ -9,11 +9,19 @@ class SignIn extends Component {
     super(props);
   }
 
+  componentWillMount(){
+    var {dispatch, auth} = this.props;
+    if (auth.authenticated) {
+      dispatch(push('/'));
+    }
+  }
+
   componentWillUnmount(){
     var {dispatch, auth} = this.props;
     if (auth.signIn || auth.signUp) {
       dispatch(actions.clearErrorMsg());
     }
+
   }
 
   handleSignIn(e){
