@@ -20,6 +20,7 @@ import createHistory from 'history/createBrowserHistory';
 import { ConnectedRouter, routerReducer, routerMiddleware, push } from 'react-router-redux';
 
 
+// Configure Redux Store
 import {  authReducer,
           booksReducer,
           settingsReducer

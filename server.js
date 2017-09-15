@@ -12,11 +12,18 @@ var Router = require("./router.js");
 const app = express();
 const PORT = process.env.PORT || 3050;
 
+if (process.env.NODE_ENV === "production") {
+  var mongodbURI = process.env.MONGODBURI;
+} else {
+  const config = require('./config');
+  var mongodbURI = config.mongodbURI;
+}
+
 var io = require('socket.io').listen(app.listen(PORT));
 
-mongoose.connect('mongodb://admin:admin@ds153003.mlab.com:53003/fcc-book-club', {useMongoClient: true});
+mongoose.connect(mongodbURI, {useMongoClient: true});
 
-// app.use(morgan('combined'));
+app.use(morgan('combined'));
 app.use(cors());
 app.use(bodyParser.json({type: '*/*'}));
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -26,11 +33,16 @@ app.use(express.static('dist'));
 io.sockets.on('connection', function (socket) {
     console.log('client connected');
     socket.on('connected', function(){
-      console.log("React Client Connected");
     });
 
     socket.on('book_added', function(){
       io.emit("pull_new_books");
+    });
+
+    socket.on('book_removed', function(){
+      io.emit("pull_new_books");
+      io.emit("pull_requests_received");
+      io.emit("pull_requests_sent");
     });
 
     socket.on('book_removed', function(){

@@ -77,6 +77,23 @@ exports.addBook = function(req, res, next) {
   });
 }
 
+exports.removeBook = function(req, res, next){
+  const email = req.body.email;
+  const uid = req.body.uid;
+
+  //remove book from user
+    //remove requests_received for this uid
+      //remove requests-sent for this uid
+
+  User.update({email: email}, {$pull: {books: {uid: uid}}}).then(function(){
+    User.update({email: email}, {$pull: {requests_received: {"book.uid": uid}}}, {multi: true}).then(function(){
+      User.update({}, {$pull: {requests_sent: {"book.uid": uid}}}, {multi: true}).then(function(){
+        res.send("Book Removed");
+      })
+    })
+  }).catch((err) => {console.log(err)});
+}
+
 exports.getMyBooks = function(req, res, next) {
 
   const email = req.query.email;
@@ -199,18 +216,6 @@ exports.approveRequest = function(req, res, next) {
   var trader = req.body.trader_email;
   var owner = req.body.owner;
   var book = req.body.request_book;
-
-  //remove request from owner
-  //remove request from trader
-  //remove book from owner
-  //transfer ownership to trader and add book to trader
-  //send success message
-
-  // on success
-    // UI challenges
-      // ON EMIT
-      //fetch myBooks
-      //fetch allbooks
 
       User.update({email: owner},{$pull: {requests_received: {request_id: request_id}}}).then(function(){
         User.update({email: trader}, {$pull: {requests_sent: {request_id: request_id}}}).then( function(){

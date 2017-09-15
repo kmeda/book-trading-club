@@ -18,7 +18,7 @@ var actions = require('../../actions/actions.jsx');
 class Home extends Component {
   constructor(props){
     super(props);
-    this.state = {setClass: null}
+    this.state = {setClass: null, requestId: false}
 
     socket.on("pull_requests_received", ()=>{
       var {dispatch} = this.props;
@@ -26,11 +26,11 @@ class Home extends Component {
     });
 
     socket.on("pull_new_books", ()=>{
-      console.log("book added");
       var {dispatch} = this.props;
       dispatch(actions.fetchMyBooks());
     });
   }
+
 
   componentWillMount(){
     var {dispatch} = this.props;
@@ -46,17 +46,24 @@ class Home extends Component {
   }
 
   cancelRequest(request_id, trader_email){
+    this.setState({requestId: request_id});
     var {dispatch} = this.props;
     var owner = this.props.auth.user.email;
-    var payload = {request_id, trader_email, owner}
+    var payload = {request_id, trader_email, owner};
     dispatch(actions.cancelRequest(payload));
   }
 
   approveRequest(request_book, request_id, trader_email){
+    this.setState({requestId: request_id});
     var {dispatch} = this.props;
     var owner = this.props.auth.user.email;
     var payload = {request_id, trader_email, owner, request_book};
     dispatch(actions.approveRequest(payload));
+  }
+
+  removeBook(book){
+    var {dispatch} = this.props;
+    dispatch(actions.removeBookfromDatabase(book.uid));
   }
 
   render(){
@@ -64,6 +71,15 @@ class Home extends Component {
         requests = requests.sort((a,b) => {
           return b.timestamp - a.timestamp;
         });
+
+    var renderButtons = (request) => {
+      if (this.state.requestId === request.request_id) {
+        return <i className="fa fa-spinner fa-pulse"></i>
+      } else {
+        return <div className="bc-books-request-btns"><i onClick={this.approveRequest.bind(this, request.book, request.request_id, request.trader)} className="fa fa-check" aria-hidden="true"></i>
+        <i onClick={this.cancelRequest.bind(this, request.request_id, request.trader)} className="fa fa-times" aria-hidden="true"></i></div>
+      }
+    }
 
     var colorStrip = [];
     for (var i = 1; i <= 10; i++) {colorStrip.push(<div key={i} className={"bc-color-strip-" +i} ></div>);}
@@ -89,10 +105,7 @@ class Home extends Component {
                               <div className="bc-books-request-userEmail">{request.trader}</div>
                             </div>
 
-                            <div className="bc-books-request-btns">
-                              <i onClick={this.approveRequest.bind(this, request.book, request.request_id, request.trader)} className="fa fa-check" aria-hidden="true"></i>
-                              <i onClick={this.cancelRequest.bind(this, request.request_id, request.trader)} className="fa fa-times" aria-hidden="true"></i>
-                            </div>
+                            { renderButtons(request) }
 
                             <div className="bc-books-request-time"><TimeAgo date={request.timestamp}/></div>
                           </div>
@@ -115,13 +128,14 @@ class Home extends Component {
                       return (
                         <div key={book.uid} className="bc-each-book-container">
                           <div className="bc-each-book">
-                            <img className="bc-each-book-img" src={image_url}></img>
+                            <a href={book.accessInfo.webReaderLink} target="_blank"><img className="bc-each-book-img" src={image_url}></img></a>
                           </div>
+                          <div className="bc-each-book-remove" onClick={this.removeBook.bind(this, book)}><i className="fa fa-trash" aria-hidden="true"></i></div>
                         </div>)
                       })
                 :
                   this.props.books.noBooksToShow
-                  ? <div>No books added yet. Search and add books you like.</div>
+                  ? <div className="bc-books-list-none">No books found. Search and add books you like.</div>
                   : <i className="bc-loading-allbooks fa fa-refresh fa-spin fa-fw"></i>
               }
             </div>

@@ -113,7 +113,6 @@ class MenuBar extends Component {
 
     var renderSearchResults = () => {
       this.props.books.searchResults.map((each, index)=> {
-        console.log(each.title);
         return (
           <li key={index}>{each.title}</li>
         );
@@ -141,7 +140,7 @@ class MenuBar extends Component {
                         var image_url = each.volumeInfo.imageLinks ? "https://"+each.volumeInfo.imageLinks.thumbnail.slice(7) : null;
                         return (
                           <div key={index} className="bc-book-details">
-                            <div className="bc-book-title">{each.volumeInfo.title}</div>
+                            <div className="bc-book-title"><a href={each.accessInfo.webReaderLink} target="_blank">{each.volumeInfo.title}</a></div>
                             <div className="bc-book-detail">
                               <div className="bc-book-img">
                                 <img src={ image_url} className="bc-book-image" alt={each.volumeInfo.title}></img>
@@ -166,7 +165,7 @@ class MenuBar extends Component {
           </div>
           <div className="bc-notification">
             <i className="fa fa-bell" aria-hidden="true">
-              {this.props.books.requestsPending ? null : <div className="bc-notification-alert"><i className="fa fa-circle" aria-hidden="true"></i></div>}
+              {this.props.books.requestsReceived.length > 0 ? <div className="bc-notification-alert"><i className="fa fa-circle" aria-hidden="true"></i></div> : null}
             </i>
           </div>
 

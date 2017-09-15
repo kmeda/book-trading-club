@@ -25,7 +25,6 @@ class AllBooks extends Component {
     }
 
     socket.on("pull_new_books", ()=>{
-      console.log("book added");
       var {dispatch} = this.props;
       dispatch(actions.fetchAllBooks());
     });
@@ -62,10 +61,8 @@ class AllBooks extends Component {
     var {dispatch} = this.props;
     var trader = this.props.auth.user.email;
     var owner = user.user;
-    // var book = book;
 
     const payload = {trader, owner, book};
-    // console.log(payload);
     dispatch(actions.setTradeReqProg(true));
     dispatch(actions.updateUserRequests(payload));
   }
