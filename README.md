@@ -2,7 +2,7 @@
 
 Freecodecamp Backend Project
 
-This project requires that a user can add books and request books from other users.
+This project requires that a user can trade books with other users.
 
 
 Link to the app. 
