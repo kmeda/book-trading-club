@@ -134,6 +134,9 @@
                   cursor: pointer
                   outline: none
                   border: none
+                  border-top-left-radius: 0
+                  border-top-right-radius: 0
+                  font-weight: bold
               .bc-book-desc
                 display: flex
                 font-size: 0.75em
@@ -199,22 +202,27 @@
       cursor: default
       animation: settingsBox .2s linear
       z-index: 999
+      .bc-settings-title
+        font-family: verdana
+        font-size: 0.9em
+        transform: translateY(8px)
       .bc-settings-form
         display: flex
         flex-direction: column
         // justify-content: space-around
         align-items: center
         color: black
-        div
-          transform: translateY(8px)
+    
         button
-          transform: translateY(-5px)
+          transform: translateY(-12px)
         .bc-settings-input
           width: 90%
           height: 20px
           padding-left: 5px
-          // border-radius: 3px
-          // border: none
+          background-color: #dedede
+          border-radius: 3px
+          margin-bottom: 5px
+          border: none
     .bc-notification
       width: 32px
       height: 100%

@@ -95,7 +95,7 @@ class MenuBar extends Component {
       return (
         <div className="bc-settings-box">
             <form className="bc-settings-form">
-              <div>Profile Settings</div>
+              <div className="bc-settings-title">Profile Settings</div>
               <br/>
               <input className="bc-settings-input" type="text" placeholder={(Object.keys(this.props.auth.user)).length <= 1 ? "First Name" : "First Name -" + this.props.auth.user.firstName} ref="firstname"/>
               <input className="bc-settings-input" type="text" placeholder={(Object.keys(this.props.auth.user)).length <= 1 ? "Last Name" : "Last Name -" + this.props.auth.user.lastName} ref="lastname"/>
@@ -144,7 +144,7 @@ class MenuBar extends Component {
                             <div className="bc-book-detail">
                               <div className="bc-book-img">
                                 <img src={ image_url} className="bc-book-image" alt={each.volumeInfo.title}></img>
-                                <button className="bc-add-book" onClick={this.addBooktoDB.bind(this, each)}><i className="fa fa-plus" aria-hidden="true"></i></button>
+                                <button className="bc-add-book" onClick={this.addBooktoDB.bind(this, each)}>Add</button>
                               </div>
                               <div className="bc-book-desc">
                                 {each.volumeInfo.description ? each.volumeInfo.description.slice(0, 460) + "..." : null}
